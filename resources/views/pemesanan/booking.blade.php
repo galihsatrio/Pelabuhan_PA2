@@ -31,14 +31,15 @@
                                   <div class="row mb-3">
                                       <div class="col-lg-6">
                                           <label for="">Tanggal</label>
-                                          <input type="date" class="form-control text-start datepicker" name="tanggal" value="">
+                                          <input type="date" class="form-control text-start datepicker" onkeydown="return false" name="tanggal" id="tanggal" value="">
+                                          <small class="text-secondary"><span class="text-danger">*</span> Pilih tanggal.</small>
                                       </div>
                                       <div class="col-lg-1"></div>
                                       <div class="col-lg-5">
                                           <label for="">Waktu Keberangkatan</label>
-                                          <select name="waktu" id="" class="center form-control">
+                                          <select name="waktu" id="waktu" class="center form-control">
                                               <option value="">-----Pilih-----</option>
-                                              <option value="08:00">08:00</option>
+                                              <option value="07:00">07:00</option>
                                               <option value="10:00">10:00</option>
                                           </select>
                                       </div>
@@ -55,7 +56,7 @@
                                       <div class="col-lg-7">
                                           <label for="">Jenis Kendaraan</label>
                                           <select name="jenis" id="jenis" class="form-control">
-                                              <option value="">-Pilih-</option>
+                                              <option value=""> -Pilih- </option>
                                               <option value="Tidak Berkendara">Tidak Berkendara</option>
                                               <option value="Gol I (Sepeda Dayung)">Gol I (Sepeda Dayung)</option>
                                               <option value="Gol II (Sepeda Motor_">Gol II (Sepeda Motor)</option>
@@ -124,7 +125,7 @@
                 <div class="col"></div>
             </div>
         </div>
- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script type='text/javascript'>
@@ -196,6 +197,14 @@
     <link rel="stylesheet" href="{{asset('css/ces.css')}}" />
     <!--Css style-->
     <link rel="stylesheet" href="{{asset('css/style.css')}}" />
+    <style>
+        .swal-footer {
+            text-align: center;
+        }
+        .swal-text {
+            text-align: center;
+        }
+    </style>
   </head>
   <body>
     <main>
@@ -208,6 +217,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{asset('https://code.jquery.com/jquery-3.6.0.min.js')}}" crossorigin="anonymous"></script>
     <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('assets/vendor/aos/aos.js')}}"></script>
@@ -235,42 +246,143 @@
       </svg>
       <script>
         popup = {
-          init: function () {
-            $("figure").click(function () {
-              popup.open($(this));
-            });
+            init: function () {
+                $("figure").click(function () {
+                    popup.open($(this));
+                });
 
-            $(document)
-              .on("click", ".popup img", function () {
-                return false;
-              })
-              .on("click", ".popup", function () {
-                popup.close();
-              });
-          },
-          open: function ($figure) {
-            $(".gallery").addClass("pop");
-            $popup = $('<div class="popup" />').appendTo($("body"));
-            $fig = $figure.clone().appendTo($(".popup"));
-            $bg = $('<div class="bg" />').appendTo($(".popup"));
-            $close = $('<div class="close"><svg><use xlink:href="#close"></use></svg></div>').appendTo($fig);
-            $shadow = $('<div class="shadow" />').appendTo($fig);
-            src = $("img", $fig).attr("src");
-            $shadow.css({ backgroundImage: "url(" + src + ")" });
-            $bg.css({ backgroundImage: "url(" + src + ")" });
-            setTimeout(function () {
-              $(".popup").addClass("pop");
-            }, 10);
-          },
-          close: function () {
-            $(".gallery, .popup").removeClass("pop");
-            setTimeout(function () {
-              $(".popup").remove();
-            }, 100);
-          },
+                $(document)
+                .on("click", ".popup img", function () {
+                    return false;
+                })
+                .on("click", ".popup", function () {
+                    popup.close();
+                });
+            },
+            open: function ($figure) {
+                $(".gallery").addClass("pop");
+                $popup = $('<div class="popup" />').appendTo($("body"));
+                $fig = $figure.clone().appendTo($(".popup"));
+                $bg = $('<div class="bg" />').appendTo($(".popup"));
+                $close = $('<div class="close"><svg><use xlink:href="#close"></use></svg></div>').appendTo($fig);
+                $shadow = $('<div class="shadow" />').appendTo($fig);
+                src = $("img", $fig).attr("src");
+                $shadow.css({ backgroundImage: "url(" + src + ")" });
+                $bg.css({ backgroundImage: "url(" + src + ")" });
+                setTimeout(function () {
+                $(".popup").addClass("pop");
+                }, 10);
+            },
+            close: function () {
+                $(".gallery, .popup").removeClass("pop");
+                    setTimeout(function () {
+                    $(".popup").remove();
+                }, 100);
+            },
         };
 
         popup.init();
+
+       
+      </script>
+      <script>
+            $(function(){
+                var dtToday = new Date();
+                
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                if(month < 10)
+                    month = '0' + month.toString();
+                if(day < 10)
+                    day = '0' + day.toString();
+                
+                var maxDate = year + '-' + month + '-' + day;
+                $("#waktu").val("").change();
+
+                $('#tanggal').attr('min', maxDate);
+            });
+
+            $(document).ready(function(){
+
+                $('#tanggal').change(function() {
+                    const weekday = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+                    const d = new Date(this.value.toString());
+                    let day = weekday[d.getDay()];
+                    if (day == "Jumat") {
+                        swal({
+                            title: "Mohon Maaf!",
+                            text: "Tidak ada jadwal keberangkatan di hari Jum'at.",
+                            icon: "warning",
+                            button: true
+                        });
+                        $("#tanggal").val("").change();
+                    }
+
+                    var exist = ($("#waktu option[value='10:00']").length > 0);
+                    if (day != 'Sabtu' && day != 'Minggu') {
+                        if(exist) {
+                            $("#waktu option[value='10:00']").each(function() {
+                                $(this).remove();
+                            });
+                        }
+                    } else if (day == 'Sabtu' || day == 'Minggu')  {
+                        if(!exist) {
+                            var o = new Option("10:00", "10:00");
+                            $(o).html("10:00");
+                            $("#waktu").append(o);
+                        }
+                    }
+                }); 
+
+                $("#waktu").change(function(){
+                    var value = jQuery(this).find(":selected").val();
+                    if(value) {
+                        // get value
+                        var split = value.split(':');
+                        var realValue = parseInt(split[0]);
+                        
+                        // get date
+                        var d = new Date();
+                        d.getHours();
+                        var month = d.getMonth() + 1;
+                        var day = d.getDate();
+                        var year = d.getFullYear();
+                        if(month < 10)
+                            month = '0' + month.toString();
+                        if(day < 10)
+                            day = '0' + day.toString();
+                        
+                        var now = year + '-' + month + '-' + day;
+                        var input = $("#tanggal").val();
+
+                        if (input) {
+                            if (now == input) {
+                                if (realValue <= d.getHours()) {
+                                    $("#waktu").val("").change();
+                                    swal({
+                                        title: "Mohon Maaf!",
+                                        text: "Waktu keberangkatan ini sudah terlambat untuk dipesan!",
+                                        icon: "warning",
+                                        button: true
+                                    });
+                                }
+                            }
+                        } else {
+                            $("#waktu").val("").change();
+                            swal({
+                                title: "Mohon Maaf!",
+                                text: "Harap pilih tanggal terlebih dahulu!",
+                                icon: "warning",
+                                button: true
+                            });
+                        }
+                       
+                    }
+
+                });
+            });
+
       </script>
      
   </body>

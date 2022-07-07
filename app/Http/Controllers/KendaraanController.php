@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kendaraan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KendaraanController extends Controller
 {
@@ -14,7 +15,8 @@ class KendaraanController extends Controller
      */
     public function index()
     {
-        $data['kendaraans'] = Kendaraan::orderBy('id','desc')->simplePaginate(5);
+        // $data['kendaraans'] = Kendaraan::orderBy('id','desc')->simplePaginate(5);
+        $data['kendaraans'] = DB::table('kendaraans')->join('pesanans', 'pesanans.id', '=', 'kendaraans.pesanan_id')->simplePaginate(5);
     
         return view('kendaraans.index', $data)
             ->with('i',(request()->input('page',1) - 1) * 5);

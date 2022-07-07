@@ -9,6 +9,6 @@ class Kendaraan extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'tanggal', 'waktu','nama', 'jenis', 'no_polisi'
+        'tanggal', 'waktu','nama', 'jenis', 'no_polisi', 'pesanan_id'
     ];
 }

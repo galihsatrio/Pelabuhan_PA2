@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 19 Jun 2022 pada 09.31
--- Versi server: 10.4.17-MariaDB
--- Versi PHP: 8.0.2
+-- Host: 127.0.0.1:3306
+-- Waktu pembuatan: 26 Jun 2022 pada 13.53
+-- Versi server: 5.7.36
+-- Versi PHP: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,16 +27,18 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `beritas`
 --
 
-CREATE TABLE `beritas` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `beritas`;
+CREATE TABLE IF NOT EXISTS `beritas` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tgl_berita` date NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `sumber` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `beritas`
@@ -53,15 +55,18 @@ INSERT INTO `beritas` (`id`, `title`, `tgl_berita`, `image`, `description`, `sum
 -- Struktur dari tabel `failed_jobs`
 --
 
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
 
@@ -69,13 +74,15 @@ CREATE TABLE `failed_jobs` (
 -- Struktur dari tabel `galeris`
 --
 
-CREATE TABLE `galeris` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `galeris`;
+CREATE TABLE IF NOT EXISTS `galeris` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `galeris`
@@ -101,14 +108,16 @@ INSERT INTO `galeris` (`id`, `title`, `image`, `created_at`, `updated_at`) VALUE
 -- Struktur dari tabel `informasis`
 --
 
-CREATE TABLE `informasis` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `informasis`;
+CREATE TABLE IF NOT EXISTS `informasis` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `informasis`
@@ -124,23 +133,27 @@ INSERT INTO `informasis` (`id`, `title`, `image`, `description`, `created_at`, `
 -- Struktur dari tabel `kendaraans`
 --
 
-CREATE TABLE `kendaraans` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `kendaraans`;
+CREATE TABLE IF NOT EXISTS `kendaraans` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tanggal` date NOT NULL,
+  `pesanan_id` int(11) DEFAULT NULL,
   `waktu` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `jenis` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `no_polisi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `kendaraans`
 --
 
-INSERT INTO `kendaraans` (`id`, `tanggal`, `waktu`, `nama`, `jenis`, `no_polisi`, `created_at`, `updated_at`) VALUES
-(1, '2022-05-11', '08:00', 'Otniel Tambunan', 'Gol I (Sepeda Dayung)', NULL, '2022-05-24 03:44:31', '2022-05-24 03:44:31');
+INSERT INTO `kendaraans` (`id`, `tanggal`, `pesanan_id`, `waktu`, `nama`, `jenis`, `no_polisi`, `created_at`, `updated_at`) VALUES
+(1, '2022-05-11', 13, '08:00', 'Otniel Tambunan', 'Gol I (Sepeda Dayung)', 'N 98667 AAB', '2022-05-24 03:44:31', '2022-06-24 07:16:24'),
+(15, '2022-06-27', 13, '08:00', 'Galih Satrio Wibisono', 'Gol II (Sepeda Motor_', 'N 82973 AAB', '2022-06-26 01:39:09', '2022-06-26 01:39:09');
 
 -- --------------------------------------------------------
 
@@ -148,11 +161,13 @@ INSERT INTO `kendaraans` (`id`, `tanggal`, `waktu`, `nama`, `jenis`, `no_polisi`
 -- Struktur dari tabel `migrations`
 --
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `migrations`
@@ -176,11 +191,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Struktur dari tabel `password_resets`
 --
 
-CREATE TABLE `password_resets` (
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
 
@@ -188,22 +205,27 @@ CREATE TABLE `password_resets` (
 -- Struktur dari tabel `penumpangs`
 --
 
-CREATE TABLE `penumpangs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `penumpangs`;
+CREATE TABLE IF NOT EXISTS `penumpangs` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pesanan_id` int(11) DEFAULT NULL,
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `jk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `umur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alamat` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lunas` tinyint(4) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `penumpangs`
 --
 
-INSERT INTO `penumpangs` (`id`, `nama`, `jk`, `umur`, `alamat`, `created_at`, `updated_at`) VALUES
-(1, 'Otniel', 'Laki', '22', 'Tambunan', '2022-05-24 03:37:58', '2022-05-24 03:37:58');
+INSERT INTO `penumpangs` (`id`, `pesanan_id`, `nama`, `jk`, `umur`, `alamat`, `lunas`, `created_at`, `updated_at`) VALUES
+(1, 13, 'Otniel', 'Laki', '22', 'Tambunan', 1, '2022-05-24 03:37:58', '2022-06-25 18:16:41'),
+(11, 13, 'Galih', 'Laki-Laki', '13', 'Puter', 0, '2022-06-26 01:39:09', '2022-06-26 01:39:09');
 
 -- --------------------------------------------------------
 
@@ -211,17 +233,46 @@ INSERT INTO `penumpangs` (`id`, `nama`, `jk`, `umur`, `alamat`, `created_at`, `u
 -- Struktur dari tabel `personal_access_tokens`
 --
 
-CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `personal_access_tokens`;
+CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pesanans`
+--
+
+DROP TABLE IF EXISTS `pesanans`;
+CREATE TABLE IF NOT EXISTS `pesanans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kode` varchar(250) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
+  `waktu` varchar(100) DEFAULT NULL,
+  `status_pembayaran` tinyint(4) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pesanans`
+--
+
+INSERT INTO `pesanans` (`id`, `kode`, `tanggal`, `waktu`, `status_pembayaran`, `created_at`, `updated_at`) VALUES
+(13, 'PMSN001', '2022-06-27', '08:00', 1, '2022-06-26 01:39:09', '2022-06-26 01:39:09');
 
 -- --------------------------------------------------------
 
@@ -229,14 +280,16 @@ CREATE TABLE `personal_access_tokens` (
 -- Struktur dari tabel `profiles`
 --
 
-CREATE TABLE `profiles` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `profiles`;
+CREATE TABLE IF NOT EXISTS `profiles` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `profiles`
@@ -256,8 +309,9 @@ INSERT INTO `profiles` (`id`, `title`, `image`, `content`, `created_at`, `update
 -- Struktur dari tabel `users`
 --
 
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -267,8 +321,11 @@ CREATE TABLE `users` (
   `level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_username_unique` (`username`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `users`
@@ -280,148 +337,10 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `google_id`, `email_veri
 (3, 'ini akun petugas (non admin)', 'petugas1', 'petugas1@example.com', NULL, NULL, '$2y$10$aJBel4322kR1LUlp144GaeLM.PSwwF2ACoGj72Ydd4T7r5iqHHMha', 'petugas', '2KSQSh3Gnp6BoPiw99MdLk4eRK7GvrNgppp7DGkyfFXJbZZ509xIsz1o2Yb7', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
 (4, 'ini akun petugas (non admin)', 'petugas2', 'petugas2@example.com', NULL, NULL, '$2y$10$CWlocgObkay8496sME9cmu.OT5uaB9.5ej2Q3Y/4msM3H3f2XaM9q', 'petugas', 'N1GWdvRwUhnI0z5RoGVUnWzATi206wKaLoSWJ82jKzthiFLHHoYnmES4j5Ce', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
 (5, 'ini akun Customer (non admin)', 'petugas3', 'petugas3@example.com', NULL, NULL, '$2y$10$3D5ldTytd3aGLum8zxWuae/gORvIzivXdJq7n2x82m0VXCzVhfp4W', 'petugas', 'uy92wmWezF0TGacLdklyitBRtGFjUWlErVKOVXUfohZXQLiruwcwInhHzge3', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
-(6, 'ini akun petugas (non admin)', 'petugas4', 'petugas4@example.com', NULL, NULL, '$2y$10$1kYJB1I66j7URpa.vfJlleGAJOKlkM2tpFakvXSxwoSFLXjs6VZDC', 'petugas', 'iQx6paPK5Nj1VevBvwEGBcgOd5eOesEWR4JcxYM8MPoCfIB5Bs1ZX5n4oyaY', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
+(6, 'ini akun petugas (non admin)', 'petugas4', 'petugas4@example.com', NULL, NULL, '$2y$10$/SjWZTxmaxlowq/SwO3dA.cxzRNRSoT5SB0WdBcbqEV59gjcd2F1e', 'petugas', 'iQx6paPK5Nj1VevBvwEGBcgOd5eOesEWR4JcxYM8MPoCfIB5Bs1ZX5n4oyaY', '2022-06-19 00:21:59', '2022-06-25 17:19:59'),
 (7, 'ini akun Customer (non admin)', 'petugas5', 'petugas5@example.com', NULL, NULL, '$2y$10$n4vA2PSgQJxhxL8c2O5ZE.RHd5B9RDJ1MEyRydTu.XYo/OlO9T7Ra', 'petugas', '2pcn4qO0raBnUjkyYz9QYeapS4HuVDkXn43LGZsNJEu3CJLHoKPaBPbnXzyC', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
-(8, 'ini akun Customer (non admin)', 'otniel', 'otniel@example.com', NULL, NULL, '$2y$10$ib/Ckq4iFx1c8NcwiGmKxevYJfGwDmT5QkipBLZFJMHRxBpIiECjO', 'pelanggan', 'Eyq9UquhYOtwz4bNr69E4M9zZWf7Lzg9a9ltSaYxdfdLBUbWJ2QKGF16doaO', '2022-06-19 00:21:59', '2022-06-19 00:21:59');
-
---
--- Indexes for dumped tables
---
-
---
--- Indeks untuk tabel `beritas`
---
-ALTER TABLE `beritas`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
-
---
--- Indeks untuk tabel `galeris`
---
-ALTER TABLE `galeris`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `informasis`
---
-ALTER TABLE `informasis`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `kendaraans`
---
-ALTER TABLE `kendaraans`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
-
---
--- Indeks untuk tabel `penumpangs`
---
-ALTER TABLE `penumpangs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
-
---
--- Indeks untuk tabel `profiles`
---
-ALTER TABLE `profiles`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_username_unique` (`username`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `beritas`
---
-ALTER TABLE `beritas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `galeris`
---
-ALTER TABLE `galeris`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT untuk tabel `informasis`
---
-ALTER TABLE `informasis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT untuk tabel `kendaraans`
---
-ALTER TABLE `kendaraans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT untuk tabel `penumpangs`
---
-ALTER TABLE `penumpangs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `profiles`
---
-ALTER TABLE `profiles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT untuk tabel `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+(8, 'ini akun Customer (non admin)', 'otniel', 'otniel@example.com', NULL, NULL, '$2y$10$ib/Ckq4iFx1c8NcwiGmKxevYJfGwDmT5QkipBLZFJMHRxBpIiECjO', 'pelanggan', 'Eyq9UquhYOtwz4bNr69E4M9zZWf7Lzg9a9ltSaYxdfdLBUbWJ2QKGF16doaO', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
+(9, 'Galih Satrio Wibisono', 'galihsatrio', 'sgalih1234@gmail.com', NULL, NULL, '$2y$10$mk8WGZEfrBTqrEI8GpsuNu4GiCoXcPVRZ9SxbGC3qa4FBvISGjUB6', 'pelanggan', NULL, '2022-06-23 16:52:12', '2022-06-23 16:52:12');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

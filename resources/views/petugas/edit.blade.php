@@ -23,7 +23,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Nama:</strong>
-                    <input type="text" name="nama" class="form-control" value="{{ $penumpang->nama }}">
+                    <input type="text" name="nama" class="form-control" value="{{ $penumpang->nama }}" disabled>
                     @error('nama')
                      <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
@@ -32,7 +32,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Jenis Kelamin:</strong>
-                    <select name="jk" id="" class="center form-control">
+                    <select name="jk" id="" class="center form-control" disabled>
                         <option value="{{ $penumpang->jk }}">{{ $penumpang->jk }}</option>
                         <option value="Laki-laki">Laki-Laki</option>
                         <option value="Perempuan">Perempuan</option>
@@ -45,7 +45,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Umur:</strong>
-                    <input type="number" name="umur" class="form-control" value="{{ $penumpang->umur }}">
+                    <input type="number" name="umur" class="form-control" value="{{ $penumpang->umur }}" disabled>
                     @error('umur')
                      <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
@@ -54,13 +54,13 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Alamat:</strong>
-                    <textarea class="form-control" style="height:50px" name="alamat" >{{ $penumpang->alamat }}</textarea>
+                    <textarea class="form-control" style="height:50px" name="alamat" disabled>{{ $penumpang->alamat }}</textarea>
                     @error('alamat')
                      <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-              <button type="submit" class="btn btn-primary ml-3">Submit</button>
+              {{-- <button type="submit" class="btn btn-primary ml-3">Submit</button> --}}
         </div>
     </form>
 </div>

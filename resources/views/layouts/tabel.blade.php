@@ -6,6 +6,7 @@
   <title>@yield('title')</title>
 
   <!-- Google Font: Source Sans Pro -->
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   {{-- <link rel="stylesheet" href="{{asset('../assets/css/all.min.css')}}"> --}}
@@ -54,6 +55,13 @@
             <i class="fa-solid fa-circle-user"></i>
             <span>Data Website</span>
           </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{asset('/pemesanan')}}">
+            <i class="fa-solid fa-book"></i>
+            <span>Pemesanan</span></a
+          >
         </li>
 
         <!-- Nav Item -Jadwal-->

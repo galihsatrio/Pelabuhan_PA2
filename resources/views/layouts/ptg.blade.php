@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{asset('../assets/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('../assets/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('../assets/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
   <!-- Theme style -->
   {{-- <link rel="stylesheet" href="{{asset('../assets/css/adminlte.min.css')}}"> --}}
   <link href="{{asset('../css/sb-admin-2.min.css')}}" rel="stylesheet" />
@@ -47,6 +48,13 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">STARTER</div>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{asset('/pemesanan-petugas')}}">
+            <i class="fa-solid fa-book"></i>
+            <span>Pemesanan</span></a
+          >
+        </li>
 
         <!-- Nav Item -Jadwal-->
         <li class="nav-item">

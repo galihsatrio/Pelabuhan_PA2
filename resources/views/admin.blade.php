@@ -58,6 +58,14 @@
 
         <!-- Nav Item -Jadwal-->
         <li class="nav-item">
+          <a class="nav-link" href="{{asset('/pemesanan')}}">
+            <i class="fa-solid fa-book"></i>
+            <span>Pemesanan</span></a
+          >
+        </li>
+
+        <!-- Nav Item -Jadwal-->
+        <li class="nav-item">
           <a class="nav-link" href="{{asset('/kendaraans')}}">
             <i class="fa-solid fa-car"></i>
             <span>Kendaraan</span></a

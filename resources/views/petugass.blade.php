@@ -56,6 +56,14 @@
           >
         </li>
 
+         <!-- Nav Item -Jadwal-->
+         <li class="nav-item">
+          <a class="nav-link" href="{{asset('/pemesanan-petugas')}}">
+            <i class="fa-solid fa-book"></i>
+            <span>Pemesanan</span></a
+          >
+        </li>
+
         <!-- Nav Item -  Penumpang-->
         <li class="nav-item">
           <a class="nav-link" href="{{asset('/petugas')}}">

@@ -25,6 +25,7 @@
     <th>Nama</th>
     <th>Jenis Kendaraan</th>
     <th>No Polisi</th>
+    <th>Pembayaran</th>
     <th width="120px">Action</th>
     </tr>
 </thead>
@@ -38,14 +39,25 @@
         <td>{{ $kendaraan->jenis }}</td>
         <td>{{ $kendaraan->no_polisi }}</td>
         <td>
+            @if ($kendaraan->status_pembayaran == 1) 
+            <span class="badge bagde-pill badge-success">Sudah Bayar</span>
+            @else 
+            <span class="badge badge-pill badge-danger">Belum Bayar</span>
+            @endif
+        </td>
+        <td>
             <form action="{{ route('mobil.destroy', $kendaraan->id) }}" method="POST">
 
-                <a class="btn btn-primary" href="{{ route('mobil.edit',$kendaraan->id) }}">Edit</a>
+                <a class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Data" href="{{ route('mobil.edit',$kendaraan->id) }}">
+                    <i class="bx bx-edit"></i>
+                </a>
 
                 @csrf
                 @method('DELETE')
 
-                <button type="submit" class="btn btn-danger">Hapus</button>
+                <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Hapus Data">
+                    <i class="bx bx-trash"></i>
+                </button>
             </form>
         </td>
     </tr>

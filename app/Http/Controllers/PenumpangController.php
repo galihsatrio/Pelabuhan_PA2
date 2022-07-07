@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Penumpang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PenumpangController extends Controller
 {
@@ -14,7 +15,8 @@ class PenumpangController extends Controller
      */
     public function index()
     {
-        $data['penumpangs'] = Penumpang::orderBy('id','desc')->simplePaginate(5);
+        // $data['penumpangs'] = Penumpang::orderBy('id','desc')->simplePaginate(5);
+        $data['penumpangs'] = DB::table('penumpangs')->join('pesanans', 'pesanans.id', '=', 'penumpangs.pesanan_id')->simplePaginate(5);
     
         return view('penumpangs.index', $data)
             ->with('i',(request()->input('page',1) - 1) * 5);
@@ -92,6 +94,21 @@ class PenumpangController extends Controller
 
         return redirect()->route('penumpangs.index')
             ->with('success', 'Data penumpang telah diubah');
+    }
+
+   /**
+     * Update Lunas Pembayaran.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function lunas(Penumpang $penumpang, $id)
+    {
+        Penumpang::where('id', $id)->update(['lunas' => 1]);
+
+        return redirect()->route('penumpangs.index')
+            ->with('success', 'Verifikasi pembayaran berhasil.');
     }
 
     /**

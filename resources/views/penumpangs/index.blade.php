@@ -1,6 +1,6 @@
 @extends('layouts.tabel')
 @section('title', 'Daftar Penumpang')
-@section('judul', 'Data  Penumpang')
+@section('judul', 'Data Penumpang')
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -23,7 +23,8 @@
         <th>Name</th>
         <th>Jenis Kelamin</th>
         <th>Umur</th>
-        <th>alamat</th>
+        <th>Alamat</th>
+        <th>Pembayaran</th>
         <th width="120px">Aksi</th>
     </tr>
 </thead>
@@ -35,15 +36,21 @@
             <td>{{ $penumpang->jk }}</td>
             <td>{{ $penumpang->umur }}</td>
             <td>{{ $penumpang->alamat }}</td>
-            <td>
+            <td class="text-center">
+                @if ($penumpang->status_pembayaran)
+                    <span class="badge badge-pill badge-success">Sudah Bayar</span>
+                @else
+                    <span class="badge badge-pill badge-danger">Belum Bayar</span>
+                @endif
+            </td>
+            <td class="text-center">
                 <form action="{{ route('penumpangs.destroy', $penumpang->id) }}" method="POST">
-
-                    <a class="btn btn-primary" href="{{ route('penumpangs.edit',$penumpang->id) }}">Edit</a>
+                    <a class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Edit Data" href="{{ route('penumpangs.edit',$penumpang->id) }}"><i class="bx bx-edit"></i></a>
 
                     @csrf
                     @method('DELETE')
 
-                    <button type="submit" class="btn btn-danger">Hapus</button>
+                    <button type="submit" class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement="top" title="Hapus Data"><i class="bx bx-trash"></i></button>
                 </form>
             </td>
         </tr>

@@ -9,6 +9,6 @@ class Penumpang extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nama', 'jk','umur', 'alamat'
+        'nama', 'jk','umur', 'alamat', 'pesanan_id'
     ];
 }

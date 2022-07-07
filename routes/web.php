@@ -15,6 +15,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\TampilController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\MobilController;
+use App\Http\Controllers\PemesananController;
 
 
 
@@ -69,6 +70,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('informasis', InformasiController::class);
         Route::resource('beritas', BeritaController::class);
         Route::resource('users', AkunController::class);
+        Route::get('/pemesanan', [PemesananController::class,'index']);
+        Route::get('/pemesanan/detail/{id}', [PemesananController::class,'detail']);
+        Route::get('/pemesanan/verifikasi-pembayaran/{id}', [PemesananController::class,'lunas']);
     });
     Route::group(['middleware' => ['cek_login:pelanggan']], function () {
         Route::post('/booking', [PesanController::class,'store']);
@@ -76,6 +80,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::group(['middleware' => ['cek_login:petugas']], function () {
         Route::get('/petugass', [CountController::class,'petugas']);
+        Route::get('/pemesanan-petugas', [PemesananController::class,'indexPetugas']);
+        Route::get('/pemesanan-petugas/detail/{id}', [PemesananController::class,'detailPetugas']);
+        Route::get('/pemesanan-petugas/verifikasi-pembayaran/{id}', [PemesananController::class,'lunasPetugas']);
         Route::resource('petugas', PetugasController::class);
         Route::resource('mobil', MobilController::class);
     });
