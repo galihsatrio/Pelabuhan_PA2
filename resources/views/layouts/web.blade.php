@@ -30,6 +30,7 @@
     {{-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" /> --}}
     <script src="{{asset('//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('//code.jquery.com/jquery-1.11.1.min.js')}}"></script>
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <!-- Variables CSS Files. Uncomment your preferred color scheme -->
     <link href="{{asset('assets/css/variables.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('css/ces.css')}}" />
@@ -90,6 +91,16 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{asset('/galeri')}}">Galeri</a>
                 </li>
+                @auth
+                @if (Auth()->user()->level == 'pelanggan')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Pemesanan </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="{{ asset('/history-pemesanan') }}">History Pemesanan</a></li>
+                    </ul>
+                </li>
+                @endif
+                @endauth
                 <li class="nav-item">
                   @if (Route::has('login'))
                   <div class="hidden fixed sm:block">
@@ -111,7 +122,7 @@
       <header class="py-5 border-bottom bgimg header-judul mb-4" >
         <div class="container">
           <div class="row">
-            <!-- <div class="col-lg-7 bg-hover1">
+            {{-- <div class="col-lg-7 bg-hover1">
               <div class="text-start my-5">
                 <h1 class="fw-bolder">Selamat Datang di Pelabuhan!</h1>
                 <p class="lead mb-0">
@@ -119,7 +130,7 @@
                   Setiyadi.
                 </p>
               </div>
-            </div> -->
+            </div> --}}
           </div>
         </div>
       </header>

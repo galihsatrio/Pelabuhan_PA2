@@ -36,7 +36,7 @@
           background-image: url("/foto/product/{{$home2->image}} ");
           height: auto;
           }
-          
+
       </style>
 
 </head>
@@ -77,6 +77,16 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{asset('/galeri')}}">Galeri</a>
                 </li>
+                @auth
+                @if (Auth()->user()->level == 'pelanggan')
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Pemesanan </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="{{ asset('/history-pemesanan') }}">History Pemesanan</a></li>
+                    </ul>
+                </li>
+                @endif
+                @endauth
                 <li class="nav-item">
                   @if (Route::has('login'))
                   <div class="hidden fixed sm:block">
@@ -88,6 +98,7 @@
                   </div>
                   @endif
                 </li>
+
               </ul>
             </div>
           </div>
