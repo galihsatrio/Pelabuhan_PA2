@@ -7,6 +7,7 @@ use App\Models\Kendaraan;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PesanController extends Controller
 {
@@ -60,7 +61,9 @@ class PesanController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Data anda telah masuk.');
+        Alert::success('Pemesanan Tiket Berhasil', 'Konfirmasi pesanan untuk pengecekkan kembali');
+        return redirect('/history-pemesanan/konfirmasi/'.Auth()->user()->id.'/'.$pesanan->id);
+        // return back()->with('success', 'Data anda telah masuk.');
     }
 
     public function historyPemesanan() {
@@ -68,9 +71,9 @@ class PesanController extends Controller
         $user = Auth()->user();
 
         $model = DB::table('pesanans')
-            ->select('pesanans.*', 'penumpangs.nama', 'penumpangs.jk', 'penumpangs.umur', 'penumpangs.alamat', 'kendaraans.nama as nama_kendaraan','kendaraans.jenis', 'kendaraans.no_polisi')
-            ->leftJoin('penumpangs', 'penumpangs.pesanan_id', '=', 'pesanans.id')
-            ->leftJoin('kendaraans', 'kendaraans.pesanan_id', '=', 'pesanans.id')
+            ->select(
+                'pesanans.*'
+            )
             ->where('pesanans.user_id', $user->id)
             ->paginate(5);
 
@@ -87,6 +90,29 @@ class PesanController extends Controller
         $pemesanan->kembali = '/history-pemesanan';
 
         return view('pemesanan.detail-history', ['pemesanan' => $pemesanan]);
+    }
+
+    public function konfirmasiPemesanan($auth, $id) {
+        $pemesanan = DB::table('pesanans')
+            ->where('pesanans.id', $id)
+            ->where('pesanans.user_id', $auth)
+            ->first();
+        $pemesanan->kendaraan = DB::table('kendaraans')->where('pesanan_id', $pemesanan->id)->first();
+        $pemesanan->penumpang = DB::table('penumpangs')->where('pesanan_id', $pemesanan->id)->get();
+        $pemesanan->kembali = '/history-pemesanan';
+
+        return view('pemesanan.konfirmasi', ['pemesanan' => $pemesanan]);
+    }
+
+    public function konfirm($auth, $id) {
+        $pemesanan = DB::table('pesanans')
+            ->where('pesanans.id', $id)
+            ->where('pesanans.user_id', $auth)
+            ->update([
+                'konfirmasi' => 1
+            ]);
+
+        return redirect('/history-pemesanan');
     }
 
 

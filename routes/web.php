@@ -79,6 +79,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pesan', [PesanController::class,'index'])->name('pemesanan');
         Route::get('/history-pemesanan', [PesanController::class,'historyPemesanan'])->name('historyPemesanan');
         Route::get('/history-pemesanan/detail/{auth}/{id}', [PesanController::class,'detailHistoryPemesanan'])->name('detailHistoryPemesanan');
+        Route::get('/history-pemesanan/konfirmasi/{auth}/{id}', [PesanController::class,'konfirmasiPemesanan'])->name('konfirmasiPemesanan');
+        Route::get('/konfirmasi-pemesanan/{auth}/{id}', [PesanController::class,'konfirm'])->name('konfirm');
     });
     Route::group(['middleware' => ['cek_login:petugas']], function () {
         Route::get('/petugass', [CountController::class,'petugas']);
