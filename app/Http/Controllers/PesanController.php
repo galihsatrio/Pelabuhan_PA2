@@ -8,6 +8,7 @@ use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Dompdf\Dompdf;
 
 class PesanController extends Controller
 {
@@ -80,6 +81,20 @@ class PesanController extends Controller
         return view('pemesanan.history', ['model' => $model]);
     }
 
+    public function indexKonfirm() {
+
+        $user = Auth()->user();
+
+        $model = DB::table('pesanans')
+            ->select(
+                'pesanans.*'
+            )
+            ->where('pesanans.user_id', $user->id)
+            ->paginate(5);
+
+        return view('konfirmasi.konfirmasi_pemesanan', ['model' => $model]);
+    }
+
     public function detailHistoryPemesanan($auth, $id) {
         $pemesanan = DB::table('pesanans')
             ->where('pesanans.id', $id)
@@ -101,7 +116,26 @@ class PesanController extends Controller
         $pemesanan->penumpang = DB::table('penumpangs')->where('pesanan_id', $pemesanan->id)->get();
         $pemesanan->kembali = '/history-pemesanan';
 
-        return view('pemesanan.konfirmasi', ['pemesanan' => $pemesanan]);
+        return view('konfirmasi.konfirmasi', ['pemesanan' => $pemesanan]);
+    }
+
+    public function detailKonfirm($auth, $id) {
+        $pemesanan = DB::table('pesanans')
+            ->where('pesanans.id', $id)
+            ->where('pesanans.user_id', $auth)
+            ->first();
+
+        $pemesanan->kendaraan = DB::table('kendaraans')->where('pesanan_id', $pemesanan->id)->first();
+        $pemesanan->penumpang = DB::table('penumpangs')->where('pesanan_id', $pemesanan->id)->get();
+
+        $data = (array) DB::table('pesanans')
+            ->where('pesanans.id', $id)
+            ->where('pesanans.user_id', $auth)
+            ->first();
+
+        $disabled = strtotime($pemesanan->tanggal) < time() ? 'disabled' : '';
+
+        return view('konfirmasi.detail', ['model' => $pemesanan, 'data' => $data, 'disabled' => $disabled]);
     }
 
     public function konfirm($auth, $id) {
@@ -112,8 +146,118 @@ class PesanController extends Controller
                 'konfirmasi' => 1
             ]);
 
-        return redirect('/history-pemesanan');
+        return redirect('/konfirmasi');
     }
+
+    public function simpanKonfirm(Request $request, $id) {
+
+        $pesanan = Pesanan::where('id', $id)->update([
+            'tanggal' => $request->tanggal,
+            'waktu' => $request->waktu,
+            'konfirmasi' => 1,
+        ]);
+
+        $kendaraan = Kendaraan::where('pesanan_id', $id)->update([
+            'tanggal' => $request->tanggal,
+            'waktu' => $request->waktu,
+            'nama' => $request->nama,
+            'jenis' => $request->jenis,
+            'no_polisi' => $request->no_polisi,
+        ]);
+
+        $request->validate([
+            'addMoreInputFields.*.nama' => 'required',
+            'addMoreInputFields.*.jk' => 'required',
+            'addMoreInputFields.*.umur' => 'required',
+            'addMoreInputFields.*.alamat' => 'required',
+        ]);
+
+        foreach ($request->addMoreInputFields as $key => $value) {
+            DB::table('penumpangs')->where('id', $value['id'])->delete();
+        }
+
+        foreach ($request->addMoreInputFields as $key => $value) {
+            Penumpang::create([
+                "nama" => $value['nama'],
+                "jk" => $value['jk'],
+                "umur" => $value['umur'],
+                "alamat" => $value['alamat'],
+                "pesanan_id" => $id
+            ]);
+        }
+
+        Alert::success('Konfirmasi Pemesanan Berhasil', 'Silahkan cetak faktur dan melanjutkan ke pembayaran');
+        return redirect('/konfirmasi');
+    }
+
+    public function faktur($user, $id) {
+
+        $model = [];
+        $pesanan = (array) DB::table('pesanans')->where('id', $id)->where('user_id', $user)->first();
+        $kendaraan = DB::table('kendaraans')
+            ->select('kendaraans.no_polisi', 'kendaraans.nama as pemilik', 'kendaraans.jenis', 'kendaraans.harga')
+            ->where('pesanan_id', $pesanan['id'])
+            ->get()->toArray();
+        $penumpang = DB::table('penumpangs')->where('pesanan_id', $pesanan['id'])->get()->toArray();
+
+        $model= $pesanan;
+        $model['item'] = $kendaraan;
+        foreach ($penumpang as $value) {
+            array_push($model['item'], $value);
+        }
+        $total = 0;
+        foreach ($model['item'] as $value ) {
+            $total += $value->harga;
+            $model['total'] = $total;
+        }
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view('konfirmasi.cetak_faktur',  ['model' => $model]));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('faktur.pdf', ['Attachment' => false]);
+
+        // return view('pemesanan.cetak_faktur', ['model' => $model]);
+    }
+
+    // public function cetakFaktur() {
+    //     // instantiate and use the dompdf class
+    //     $dompdf = new Dompdf();
+    //     $dompdf->loadHtml(view('pemesanan.cetak_faktur'));
+
+    //     // (Optional) Setup the paper size and orientation
+    //     $dompdf->setPaper('A4', 'landscape');
+
+    //     // Render the HTML as PDF
+    //     $dompdf->render();
+
+    //     // Output the generated PDF to Browser
+    //     $dompdf->stream('faktur.pdf', ['Attachment' => false]);
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // public function store(Request $request){

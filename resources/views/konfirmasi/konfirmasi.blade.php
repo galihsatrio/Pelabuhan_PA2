@@ -2,56 +2,112 @@
 @section('title', 'Pesan | Pelabuhan Mulia Raja Napitupulu')
 @section('breadcrumb', 'Pesan')
 @section('content')
-<div class="container pb-5">
-    <div class="row">
-        <div class="col-12">
-            <h3 class="my-5">History Pemesanan</h3>
+<div class="container mb-5">
+    <div class="row mt-5">
+        <div class="col-3">
+            <h5>Konfirmasi Pemesanan</h5>
+            <hr>
+        </div>
+        <div class="col-9 text-end">
+            <a href="/faktur/{{ Auth()->user()->id }}/{{$pemesanan->id}}" class="btn btn-danger btn-sm ms-auto">
+                <i class="bx bxs-file-pdf"></i>
+                Cetak Faktur
+            </a>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-6 pe-5">
+            <div class="form-group mb-4">
+                <strong class="mb-4">Kode Pemesanan</strong>
+                <input type="text" name="kode" class="form-control" value="{{ $pemesanan->kode }}" disabled>
+            </div>
+        </div>
+        <div class="col-6 pe-5">
+            <div class="form-group mb-4">
+                <strong class="mb-4">Tanggal</strong>
+                <input type="text" name="tanggal" class="form-control" value="{{ $pemesanan->tanggal }}" disabled>
+            </div>
+        </div>
+        <div class="col-6 pe-5">
+            <div class="form-group mb-4">
+                <strong class="mb-4">Waktu</strong>
+                <input type="text" name="waktu" class="form-control" value="{{ $pemesanan->waktu }}" disabled>
+            </div>
+        </div>
 
-            <table class="table table-striped mb-5">
+    </div>
+    <div class="row mt-5">
+        <div class="col-2">
+            <h5>Data Kendaraan</h5>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 pe-5">
+            <div class="form-group mb-4">
+                <strong class="mb-4">Pemilik</strong>
+                <input type="text" name="nama_pemilik" class="form-control" value="{{ $pemesanan->kendaraan->nama }}" disabled>
+            </div>
+        </div>
+        <div class="col-6 pe-5">
+            <div class="form-group mb-4">
+                <strong class="mb-4">Jenis Kendaraan</strong>
+                <input type="text" name="jenis" class="form-control" value="{{ $pemesanan->kendaraan->jenis }}" disabled>
+            </div>
+        </div>
+        <div class="col-6 pe-5">
+            <div class="form-group mb-4">
+                <strong class="mb-4">No Polisi</strong>
+                <input type="text" name="no_polisi" class="form-control" value="{{ $pemesanan->kendaraan->no_polisi }}" disabled>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-2">
+            <h5>Data Penumpang</h5>
+            <hr>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <table class="table table-bordered">
                 <thead class="table-dark">
-                    <tr class="text-center">
-                        <th height="50" style="vertical-align: middle">Kode</th>
-                        <th height="50" style="vertical-align: middle">Tanggal</th>
-                        <th height="50" style="vertical-align: middle">Pemesan</th>
-                        <th height="50" style="vertical-align: middle">Status Pembayaran</th>
-                        {{-- <th height="50" style="vertical-align: middle">Konfirmasi Pesanan</th> --}}
-                        <th height="50" style="vertical-align: middle">Detail</th>
+                    <tr>
+                        <th>Nama Penumpang</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Umur</th>
+                        <th>Alamat</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($model as $value)
-                    <tr class="text-center">
-                        <td height="50" style="vertical-align: middle">{{ $value->kode }}</td>
-                        <td height="50" style="vertical-align: middle">{{ $value->tanggal }}</td>
-                        <td height="50" style="vertical-align: middle">{{ Auth()->user()->name }}</td>
-                        <td height="50" class="text-center" style="vertical-align: middle">
-                            @if ($value->status_pembayaran == 1)
-                                <span class="badge rounded-pill bg-success">Success</span>
-                            @else
-                                <span class="badge rounded-pill bg-warning text-light">Belum Terbayar</span>
-                            @endif
-                        </td>
-                        {{-- <td>
-                            @if ($value->konfirmasi == 0)
-                            <a href="/history-pemesanan/konfirmasi/{{Auth()->user()->id}}/{{$value->id}}">
-                                <i class="bx bx-check-shield bx-sm text-success" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Konfirmasi Pesanan"></i>
-                            </a>
-                            @else
-                            <i class="bx bxs-check-shield bx-sm text-success" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Konfirmasi Pesanan"></i>
-                            @endif
-                        </td> --}}
-                        <td height="50" style="vertical-align: middle">
-                            <a href="/history-pemesanan/detail/{{Auth()->user()->id}}/{{$value->id}}">
-                                <i class="bx bxs-info-circle bx-sm text-primary" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"></i>
-                            </a>
-                        </td>
+                    @foreach($pemesanan->penumpang as $value)
+                    <tr>
+                        <td>{{ $value->nama }}</td>
+                        <td>{{ $value->jk }}</td>
+                        <td>{{ $value->umur }}</td>
+                        <td>{{ $value->alamat }}</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+    <div class="row pt-4">
+        <div class="col-12">
+            <a href="/konfirmasi" class="btn btn-sm btn-primary">
+                <i class="bx bx-chevron-left"></i>
+                Kembali
+            </a>
+            @if ($pemesanan->konfirmasi == 0)
+            <a href="/konfirmasi-pemesanan/{{ Auth()->user()->id }}/{{ $pemesanan->id }}" class="btn btn btn-success btn-sm">
+                <i class="bx bx-check-shield"></i>
+                Konfirmasi Pemesanan
+            </a>
+            @endif
+        </div>
+    </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

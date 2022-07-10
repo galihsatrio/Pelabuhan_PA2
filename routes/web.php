@@ -80,7 +80,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/history-pemesanan', [PesanController::class,'historyPemesanan'])->name('historyPemesanan');
         Route::get('/history-pemesanan/detail/{auth}/{id}', [PesanController::class,'detailHistoryPemesanan'])->name('detailHistoryPemesanan');
         Route::get('/history-pemesanan/konfirmasi/{auth}/{id}', [PesanController::class,'konfirmasiPemesanan'])->name('konfirmasiPemesanan');
+        Route::get('/konfirmasi', [PesanController::class,'indexKonfirm'])->name('indexKonfirmasi');
         Route::get('/konfirmasi-pemesanan/{auth}/{id}', [PesanController::class,'konfirm'])->name('konfirm');
+        Route::get('/konfirmasi/{auth}/{id}', [PesanController::class,'detailKonfirm'])->name('detailKonfirm');
+        Route::get('/faktur/{auth}/{id}', [PesanController::class,'faktur'])->name('faktur');
+        Route::post('/simpan-konfirm/{id}', [PesanController::class,'simpanKonfirm'])->name('simpanKonfirm');
     });
     Route::group(['middleware' => ['cek_login:petugas']], function () {
         Route::get('/petugass', [CountController::class,'petugas']);
