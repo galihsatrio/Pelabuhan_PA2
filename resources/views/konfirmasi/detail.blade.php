@@ -28,9 +28,15 @@
                             <div>
                                 <div class="row">
                                     <div class="col">
+                                        @if ($disabled == 'disabled')
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                             <strong>Mohon Maaf!</strong> Pesanan sudah kadaluarsa.
                                         </div>
+                                        @else
+                                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                            <strong>Segera Konfirmasi!</strong> <br> Jika tanggal pemesanan tiket sudah terlewati maka pemesanan akan <b>kadaluarsa</b> .
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="row mb-4">
@@ -86,6 +92,10 @@
                                             <option value="Gol VIII (Trailer)" {{ $model->kendaraan->jenis == 'Gol VIII (Trailer)' ? 'selected' : '' }}>Gol VIII (Trailer)</option>
                                         </select>
                                     </div>
+                                    <div class="col-lg-5">
+                                        <label for="">Harga</label>
+                                        <input type="text" class="form-control" value="{{$model->kendaraan->harga}}" name="harga" disabled>
+                                    </div>
                                 </div>
 
                                 <div class="row mb-3">
@@ -107,6 +117,7 @@
                                     <td><label for="">Alamat</label></td>
                                     <td></td>
                                 </tr>
+                                <div class="d-none">{{ $total = 0; }}</div>
                                 @foreach($model->penumpang as $key => $value)
                                 <input class="d-none" type="text" value="{{$value->id}}" name="addMoreInputFields[{{$key}}][id]">
                                 <tr>
@@ -127,10 +138,25 @@
                                         <input type="text" name="addMoreInputFields[{{$key}}][alamat]" placeholder="Enter " class="form-control" value="{{ $value->alamat }}" {{$disabled}}/>
                                     </td>
                                     <td>
+                                        <input type="text" name="addMoreInputFields[{{$key}}][harga]" placeholder="Enter " class="form-control" value="{{ $value->harga }}" {{$disabled}}/>
+                                    </td>
+                                    <td>
                                         <button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary" {{$disabled}}>Tambah </button>
                                     </td>
+                                    <div class="d-none">{{ $total += $value->harga }}</div>
                                 </tr>
                                 @endforeach
+                            </table>
+                            <table width="100%">
+                                <tr>
+                                    <td width="20%"></td>
+                                    <td width="20%"></td>
+                                    <td width="20%"></td>
+                                    <td width="20%" class="text-end pe-3"> <b>Total</b> </td>
+                                    <td width="20%">
+                                        <input type="text" class="form-control" id="total" name="total" value="{{$total}}" disabled="disabled">
+                                    </td>
+                                </tr>
                             </table>
                             @if (Route::has('login'))
                                 <div class="hidden fixed sm:block">
@@ -179,17 +205,23 @@
     </script>
     <script type="text/javascript">
         var i = 0;
+        var total = 19000;
         $("#dynamic-ar").click(function () {
             ++i;
+            total += 19000;
+            $('#total').val(total);
             $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
                 '][nama]" placeholder="Enter " class="form-control" /></td><td><select name="addMoreInputFields[' + i +
                 '][jk]" id="" class="center form-control"><option value="">Pilih</option><option value="Laki-Laki">Laki-Laki</option><option value="Perempuan">Perempuan</option></select></td></td><td><input type="text" name="addMoreInputFields[' + i +
                 '][umur]" placeholder="Enter " class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
-                '][alamat]" placeholder="Enter " class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
-                );
+                '][alamat]" placeholder="Enter " class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
+                '][harga]" placeholder="Enter " class="form-control" value="19000" disabled/></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+            );
         });
         $(document).on('click', '.remove-input-field', function () {
             $(this).parents('tr').remove();
+            total -= 19000;
+            $('#total').val(total);
         });
     </script>
 @endsection

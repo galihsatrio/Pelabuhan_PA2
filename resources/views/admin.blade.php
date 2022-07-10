@@ -241,30 +241,363 @@
 
             <!-- Content Row -->
             <div class="row">
-              <!-- Content Column -->
-              <div class="col-lg-6 mb-4">
-                <!-- Informasi -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Informasi</h6>
-                  </div>
-                  <div class="card-body">
-                    <div class="text-center">
-                      <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem" src="img/undraw_posting_photo.svg" alt="..." />
+                <!-- Content Column -->
+                <div class="col-lg-6 mb-4">
+                    <!-- Informasi -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Informasi</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem" src="img/undraw_posting_photo.svg" alt="..." />
+                            </div>
+                            <p>
+                            Selamat datang admin Selamat datang di Sistem informasi Pelabuhan Mulia Raja Napitupulu. Hal-hal yang anda dapatkan setelah masuk pada halaman admin website kami adalah sebagai berikut :
+                            </p>
+                            <p>1. Dapat mengelola data profil pada navigasi "Profil"</p>
+                            <p>2. Dapat mengelola data kendaraan pada navigasi “Kendaraan”</p>
+                            <p>3. Dapat mengelola data penumpang pada navigasi “Penumpang”</p>
+                            <p>4. Dapat mengubah dan menghapus data Berita dan data Pengumuman pada navigasi “Kendaraan”</p>
+                            <p>5. Dapat mengelola akun penumpang dan akun petugas pada navigasi “Akun”</p>
+                            <p>6. Dapat memverifikasi daftar gambar yang sudah diajukan pengunjung website pada “Galeri”</p>
+                            <p>7. Dapat mengunjungi halaman pengunjung pada navigasi "Halaman Pengunjung".</p>
+                        </div>
                     </div>
-                    <p>
-                      Selamat datang admin Selamat datang di Sistem informasi Pelabuhan Mulia Raja Napitupulu. Hal-hal yang anda dapatkan setelah masuk pada halaman admin website kami adalah sebagai berikut :
-                    </p>
-                    <p>1. Dapat mengelola data profil pada navigasi "Profil"</p>
-                    <p>2. Dapat mengelola data kendaraan pada navigasi “Kendaraan”</p>
-                    <p>3. Dapat mengelola data penumpang pada navigasi “Penumpang”</p>
-                    <p>4. Dapat mengubah dan menghapus data Berita dan data Pengumuman pada navigasi “Kendaraan”</p>
-                    <p>5. Dapat mengelola akun penumpang dan akun petugas pada navigasi “Akun”</p>
-                    <p>6. Dapat memverifikasi daftar gambar yang sudah diajukan pengunjung website pada “Galeri”</p>
-                    <p>7. Dapat mengunjungi halaman pengunjung pada navigasi "Halaman Pengunjung".</p>
-                  </div>
                 </div>
-              </div>
+                <div class="col-lg-6">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Batas Penumpang & Kendaraan</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem" src="img/undraw_posting_photo.svg" alt="..." />
+                            </div>
+                            <div class="row justify-content-center mt-4">
+                                <div class="col-5">
+                                    <div class="h-auto">
+                                        <h3 class="mt-4">Batas Penumpang</h3>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="box w-75 bg-primary text-white text-center rounded py-4 mx-auto" data-toggle="modal" data-target="#modalPenumpang" role="button">
+                                        <h1 class="my-auto">{{ $batas->batas_penumpang }} <h6>Orang</h6></h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mt-4">
+                                <div class="col-5">
+                                    <div class="h-auto">
+                                        <h3 class="mt-4">Batas Kendaraan</h3>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="box w-75 bg-primary text-white text-center rounded py-4 mx-auto" data-toggle="modal" data-target="#modalKendaraan" role="button">
+                                        <h1 class="my-auto">{{ $batas->batas_kendaraan }} <h6>Kendaraan</h6></h1>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Penumpang -->
+                            <div class="modal fade" id="modalPenumpang" tabindex="-1" role="dialog" aria-labelledby="modalPenumpangLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Batas Penumpang</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="max-height: 500px; overflow-y: auto">
+                                            <div class="row justify-content-center">
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '17' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="17" onclick="batasPenumpang(17)" role="button">
+                                                        <h1 class="my-auto">17</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '30' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="30" onclick="batasPenumpang(30)" role="button">
+                                                        <h1 class="my-auto">30</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '18' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="18" onclick="batasPenumpang(18)" role="button">
+                                                        <h1 class="my-auto">18</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '31' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="31" onclick="batasPenumpang(31)" role="button">
+                                                        <h1 class="my-auto">31</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '19' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="19" onclick="batasPenumpang(19)" role="button">
+                                                        <h1 class="my-auto">19</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '32' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="32" onclick="batasPenumpang(32)" role="button">
+                                                        <h1 class="my-auto">32</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '20' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="20" onclick="batasPenumpang(20)" role="button">
+                                                        <h1 class="my-auto">20</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '34' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="34" onclick="batasPenumpang(34)" role="button">
+                                                        <h1 class="my-auto">34</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '21' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="21" onclick="batasPenumpang(21)" role="button">
+                                                        <h1 class="my-auto">21</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '35' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="35" onclick="batasPenumpang(35)" role="button">
+                                                        <h1 class="my-auto">35</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '22' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="22" onclick="batasPenumpang(22)" role="button">
+                                                        <h1 class="my-auto">22</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '36' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="36" onclick="batasPenumpang(36)" role="button">
+                                                        <h1 class="my-auto">36</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '23' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="23" onclick="batasPenumpang(23)" role="button">
+                                                        <h1 class="my-auto">23</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '37' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="37" onclick="batasPenumpang(37)" role="button">
+                                                        <h1 class="my-auto">37</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '24' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="24" onclick="batasPenumpang(24)" role="button">
+                                                        <h1 class="my-auto">24</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '38' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="38" onclick="batasPenumpang(38)" role="button">
+                                                        <h1 class="my-auto">38</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '25' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="25" onclick="batasPenumpang(25)" role="button">
+                                                        <h1 class="my-auto">25</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '39' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="39" onclick="batasPenumpang(39)" role="button">
+                                                        <h1 class="my-auto">39</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '26' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="26" onclick="batasPenumpang(26)" role="button">
+                                                        <h1 class="my-auto">26</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '40' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="40" onclick="batasPenumpang(40)" role="button">
+                                                        <h1 class="my-auto">40</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '27' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="27" onclick="batasPenumpang(27)" role="button">
+                                                        <h1 class="my-auto">27</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '41' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="41" onclick="batasPenumpang(41)" role="button">
+                                                        <h1 class="my-auto">41</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '28' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="28" onclick="batasPenumpang(28)" role="button">
+                                                        <h1 class="my-auto">28</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '42' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="42" onclick="batasPenumpang(42)" role="button">
+                                                        <h1 class="my-auto">42</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '29' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="29" onclick="batasPenumpang(29)" role="button">
+                                                        <h1 class="my-auto">29</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_penumpang == '43' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="43" onclick="batasPenumpang(43)" role="button">
+                                                        <h1 class="my-auto">43</h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <form action="" method="get" id="formBatasPenumpang"></form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Kendaraan -->
+                            <div class="modal fade" id="modalKendaraan" tabindex="-1" role="dialog" aria-labelledby="modalKendaraanLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Batas Kendaraan</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="max-height: 500px; overflow-y: auto">
+                                            <div class="row justify-content-center">
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '17' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="17" onclick="batasKendaraan(17)" role="button">
+                                                        <h1 class="my-auto">17</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '30' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="30" onclick="batasKendaraan(30)" role="button">
+                                                        <h1 class="my-auto">30</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '18' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="18" onclick="batasKendaraan(18)" role="button">
+                                                        <h1 class="my-auto">18</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '31' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="31" onclick="batasKendaraan(31)" role="button">
+                                                        <h1 class="my-auto">31</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '19' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="19" onclick="batasKendaraan(19)" role="button">
+                                                        <h1 class="my-auto">19</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '32' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="32" onclick="batasKendaraan(32)" role="button">
+                                                        <h1 class="my-auto">32</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '20' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="20" onclick="batasKendaraan(20)" role="button">
+                                                        <h1 class="my-auto">20</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '34' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="34" onclick="batasKendaraan(34)" role="button">
+                                                        <h1 class="my-auto">34</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '21' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="21" onclick="batasKendaraan(21)" role="button">
+                                                        <h1 class="my-auto">21</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '35' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="35" onclick="batasKendaraan(35)" role="button">
+                                                        <h1 class="my-auto">35</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '22' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="22" onclick="batasKendaraan(22)" role="button">
+                                                        <h1 class="my-auto">22</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '36' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="36" onclick="batasKendaraan(36)" role="button">
+                                                        <h1 class="my-auto">36</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '23' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="23" onclick="batasKendaraan(23)" role="button">
+                                                        <h1 class="my-auto">23</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '37' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="37" onclick="batasKendaraan(37)" role="button">
+                                                        <h1 class="my-auto">37</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '24' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="24" onclick="batasKendaraan(24)" role="button">
+                                                        <h1 class="my-auto">24</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '38' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="38" onclick="batasKendaraan(38)" role="button">
+                                                        <h1 class="my-auto">38</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '25' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="25" onclick="batasKendaraan(25)" role="button">
+                                                        <h1 class="my-auto">25</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '39' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="39" onclick="batasKendaraan(39)" role="button">
+                                                        <h1 class="my-auto">39</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '26' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="26" onclick="batasKendaraan(26)" role="button">
+                                                        <h1 class="my-auto">26</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '40' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="40" onclick="batasKendaraan(40)" role="button">
+                                                        <h1 class="my-auto">40</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '27' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="27" onclick="batasKendaraan(27)" role="button">
+                                                        <h1 class="my-auto">27</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '41' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="41" onclick="batasKendaraan(41)" role="button">
+                                                        <h1 class="my-auto">41</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '28' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="28" onclick="batasKendaraan(28)" role="button">
+                                                        <h1 class="my-auto">28</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '42' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="42" onclick="batasKendaraan(42)" role="button">
+                                                        <h1 class="my-auto">42</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '29' ? 'bg-primary text-white' : '' }} rounded text-center py-4 mx-auto" id="29" onclick="batasKendaraan(29)" role="button">
+                                                        <h1 class="my-auto">29</h1>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <div class="box w-75 {{ $batas->batas_kendaraan == '43' ? 'bg-primary text-white' : '' }} text-center rounded py-4 mx-auto" id="43" onclick="batasKendaraan(43)" role="button">
+                                                        <h1 class="my-auto">43</h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <form action="" method="get" id="formBatasKendaraan"></form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
             </div>
           </div>
           <!-- /.container-fluid -->
@@ -325,5 +658,18 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script>
+        function batasPenumpang(value) {
+            let form = document.getElementById('formBatasPenumpang');
+                form.setAttribute("action", "/batas-penumpang/" + value);
+                form.submit();
+        }
+
+        function batasKendaraan(value) {
+            let form = document.getElementById('formBatasKendaraan');
+                form.setAttribute("action", "/batas-kendaraan/" + value);
+                form.submit();
+        }
+    </script>
   </body>
 </html>

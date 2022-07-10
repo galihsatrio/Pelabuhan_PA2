@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Waktu pembuatan: 26 Jun 2022 pada 13.53
+-- Waktu pembuatan: 10 Jul 2022 pada 16.00
 -- Versi server: 5.7.36
 -- Versi PHP: 8.0.13
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `pa_pelabuhan`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `batas`
+--
+
+DROP TABLE IF EXISTS `batas`;
+CREATE TABLE IF NOT EXISTS `batas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `batas_penumpang` int(11) DEFAULT '17',
+  `batas_kendaraan` int(11) DEFAULT '17',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `batas`
+--
+
+INSERT INTO `batas` (`id`, `batas_penumpang`, `batas_kendaraan`) VALUES
+(1, 34, 30);
 
 -- --------------------------------------------------------
 
@@ -130,6 +151,33 @@ INSERT INTO `informasis` (`id`, `title`, `image`, `description`, `created_at`, `
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `invoice`
+--
+
+DROP TABLE IF EXISTS `invoice`;
+CREATE TABLE IF NOT EXISTS `invoice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kode` varchar(255) DEFAULT NULL,
+  `pesanan_id` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `modified_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `invoice`
+--
+
+INSERT INTO `invoice` (`id`, `kode`, `pesanan_id`, `total`, `created_at`, `modified_at`) VALUES
+(1, 'INVC006', 16, 57000, '2022-07-09 17:00:00', NULL),
+(2, 'INVC006', 20, 19000, '2022-07-10 05:09:27', NULL),
+(3, 'INVC007', 21, 38000, '2022-07-10 07:46:50', NULL),
+(4, 'INVC004', 23, 73000, '2022-07-10 08:17:02', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `kendaraans`
 --
 
@@ -142,18 +190,27 @@ CREATE TABLE IF NOT EXISTS `kendaraans` (
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `jenis` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `no_polisi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `harga` int(11) DEFAULT '54000',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `kendaraans`
 --
 
-INSERT INTO `kendaraans` (`id`, `tanggal`, `pesanan_id`, `waktu`, `nama`, `jenis`, `no_polisi`, `created_at`, `updated_at`) VALUES
-(1, '2022-05-11', 13, '08:00', 'Otniel Tambunan', 'Gol I (Sepeda Dayung)', 'N 98667 AAB', '2022-05-24 03:44:31', '2022-06-24 07:16:24'),
-(15, '2022-06-27', 13, '08:00', 'Galih Satrio Wibisono', 'Gol II (Sepeda Motor_', 'N 82973 AAB', '2022-06-26 01:39:09', '2022-06-26 01:39:09');
+INSERT INTO `kendaraans` (`id`, `tanggal`, `pesanan_id`, `waktu`, `nama`, `jenis`, `no_polisi`, `harga`, `created_at`, `updated_at`) VALUES
+(1, '2022-05-11', 13, '08:00', 'Otniel Tambunan', 'Gol I (Sepeda Dayung)', 'N 98667 AAB', 54000, '2022-05-24 03:44:31', '2022-06-24 07:16:24'),
+(15, '2022-06-27', 13, '08:00', 'Galih Satrio Wibisono', 'Gol II (Sepeda Motor_', 'N 82973 AAB', 54000, '2022-06-26 01:39:09', '2022-06-26 01:39:09'),
+(16, '2022-07-11', 14, '07:00', 'Galih', 'Gol I (Sepeda Dayung)', NULL, 54000, '2022-07-07 11:34:17', '2022-07-09 19:28:39'),
+(17, '2022-07-11', 15, '07:00', 'Galih Satrio Wibisono', 'Gol VII (Tronton)', '21313', 54000, '2022-07-07 11:34:57', '2022-07-09 19:40:31'),
+(18, '2022-07-11', 16, '10:00', 'Buku 5', 'Gol VII (Tronton)', '21313', 54000, '2022-07-07 11:35:51', '2022-07-10 04:58:47'),
+(21, '2022-07-11', 20, '10:00', 'Galih Satrio Wibisono', 'Gol V A (Bus Sedang)', '21313', 54000, '2022-07-08 21:29:46', '2022-07-10 05:09:27'),
+(22, '2022-07-11', 21, '10:00', 'Galih Satrio Wibisono', 'Gol II (Sepeda Motor_', 'N 8908 AB', 54000, '2022-07-10 07:44:01', '2022-07-10 07:46:50'),
+(23, '2022-07-11', 22, '07:00', 'Galih Satrio Wibisono', 'Gol I (Sepeda Dayung)', NULL, 54000, '2022-07-10 07:48:34', '2022-07-10 07:48:34'),
+(24, '2022-07-11', 23, '07:00', 'Galih Satrio Wibisono', 'Gol II (Sepeda Motor_', NULL, 54000, '2022-07-10 07:51:10', '2022-07-10 07:51:10'),
+(25, '2022-07-11', 24, '07:00', 'Galih Satrio Wibisono', 'Gol I (Sepeda Dayung)', NULL, 54000, '2022-07-10 07:59:55', '2022-07-10 07:59:55');
 
 -- --------------------------------------------------------
 
@@ -214,18 +271,30 @@ CREATE TABLE IF NOT EXISTS `penumpangs` (
   `umur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alamat` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `lunas` tinyint(4) DEFAULT '0',
+  `harga` int(11) DEFAULT '19000',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data untuk tabel `penumpangs`
 --
 
-INSERT INTO `penumpangs` (`id`, `pesanan_id`, `nama`, `jk`, `umur`, `alamat`, `lunas`, `created_at`, `updated_at`) VALUES
-(1, 13, 'Otniel', 'Laki', '22', 'Tambunan', 1, '2022-05-24 03:37:58', '2022-06-25 18:16:41'),
-(11, 13, 'Galih', 'Laki-Laki', '13', 'Puter', 0, '2022-06-26 01:39:09', '2022-06-26 01:39:09');
+INSERT INTO `penumpangs` (`id`, `pesanan_id`, `nama`, `jk`, `umur`, `alamat`, `lunas`, `harga`, `created_at`, `updated_at`) VALUES
+(1, 13, 'Galih', 'Laki-Laki', '22', 'Tambunan', 1, 19000, '2022-05-24 03:37:58', '2022-06-25 18:16:41'),
+(11, 13, 'Galih', 'Laki-Laki', '13', 'Puter', 0, 19000, '2022-06-26 01:39:09', '2022-06-26 01:39:09'),
+(18, 14, 'Galih', 'Laki-Laki', '13', 'Jl Puter Tengah no.1', 0, 19000, '2022-07-09 19:28:39', '2022-07-09 19:28:39'),
+(19, 15, 'Galih', 'Laki-Laki', '12', 'Jl Puter  Tengah no.1', 0, 19000, '2022-07-09 19:40:31', '2022-07-09 19:40:31'),
+(50, 16, 'Galih', 'Laki-Laki', '21', 'Jl Puter Tengah no.1', 0, 19000, '2022-07-10 04:58:47', '2022-07-10 04:58:47'),
+(51, 16, 'Santoso', 'Laki-Laki', '12', 'Jl Mawar', 0, 19000, '2022-07-10 04:58:47', '2022-07-10 04:58:47'),
+(52, 16, 'Sanusi', 'Laki-Laki', '12', 'Jl Melati', 0, 19000, '2022-07-10 04:58:47', '2022-07-10 04:58:47'),
+(53, 20, 'Galih', 'Laki-Laki', '19', 'Jl Puter Tengah no.1', 0, 19000, '2022-07-10 05:09:27', '2022-07-10 05:09:27'),
+(56, 21, 'Galih', 'Laki-Laki', '19', 'Jl Puter Tengah no.1', 0, 19000, '2022-07-10 07:46:50', '2022-07-10 07:46:50'),
+(57, 21, 'Anggita Shefiana', 'Perempuan', '17', 'Jl BUnga Mawar no.1', 0, 19000, '2022-07-10 07:46:50', '2022-07-10 07:46:50'),
+(58, 22, 'Galih', 'Laki-Laki', '19', 'Jl Puter Tengah no.1', 0, 19000, '2022-07-10 07:48:34', '2022-07-10 07:48:34'),
+(59, 23, 'Galih Satrio', 'Laki-Laki', '19', 'Jl Puter Tengah no.1', 0, 19000, '2022-07-10 07:51:10', '2022-07-10 07:51:10'),
+(60, 24, 'Galih', 'Laki-Laki', '19', 'Jl Puter Tengah no.1', 0, 19000, '2022-07-10 07:59:55', '2022-07-10 07:59:55');
 
 -- --------------------------------------------------------
 
@@ -262,17 +331,28 @@ CREATE TABLE IF NOT EXISTS `pesanans` (
   `tanggal` date DEFAULT NULL,
   `waktu` varchar(100) DEFAULT NULL,
   `status_pembayaran` tinyint(4) DEFAULT '0',
+  `user_id` int(11) DEFAULT NULL,
+  `konfirmasi` tinyint(4) DEFAULT '0',
+  `konfirmasi_petugas` tinyint(4) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pesanans`
 --
 
-INSERT INTO `pesanans` (`id`, `kode`, `tanggal`, `waktu`, `status_pembayaran`, `created_at`, `updated_at`) VALUES
-(13, 'PMSN001', '2022-06-27', '08:00', 1, '2022-06-26 01:39:09', '2022-06-26 01:39:09');
+INSERT INTO `pesanans` (`id`, `kode`, `tanggal`, `waktu`, `status_pembayaran`, `user_id`, `konfirmasi`, `konfirmasi_petugas`, `created_at`, `updated_at`) VALUES
+(13, 'PMSN001', '2022-06-27', '08:00', 1, 9, 1, 0, '2022-06-26 01:39:09', '2022-06-26 01:39:09'),
+(14, 'PMSN002', '2022-07-11', '07:00', 1, 9, 1, 0, '2022-07-07 11:34:17', '2022-07-09 19:28:39'),
+(15, 'PMSN003', '2022-07-11', '07:00', 0, 9, 1, 0, '2022-07-07 11:34:57', '2022-07-09 19:40:31'),
+(16, 'PMSN004', '2022-07-11', '10:00', 0, 9, 1, 0, '2022-07-07 11:35:51', '2022-07-10 04:58:47'),
+(20, 'PMSN005', '2022-07-11', '10:00', 0, 9, 1, 0, '2022-07-08 21:29:46', '2022-07-10 05:09:27'),
+(21, 'PMSN006', '2022-07-11', '10:00', 0, 9, 1, 0, '2022-07-10 07:44:01', '2022-07-10 07:46:50'),
+(22, 'PMSN007', '2022-07-11', '07:00', 0, 9, 0, 0, '2022-07-10 07:48:34', '2022-07-10 07:48:34'),
+(23, 'PMSN008', '2022-07-11', '07:00', 1, 9, 0, 0, '2022-07-10 07:51:10', '2022-07-10 07:51:10'),
+(24, 'PMSN009', '2022-07-11', '07:00', 1, 9, 0, 0, '2022-07-10 07:59:55', '2022-07-10 07:59:55');
 
 -- --------------------------------------------------------
 
@@ -332,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `google_id`, `email_verified_at`, `password`, `level`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'ini akun Admin', 'admin', 'admin@example.com', NULL, NULL, '$2y$10$hs2p0pteQW0alOYjlVBIXe8KXAE3jTc59Xg75QxDqdbrzXz3v0b9K', 'admin', 'RSpF6p9caJhkRYHrowYADgCIs4W9vVt3vTLHWbBv34C1b245BfMulab3ek9s', '2022-06-19 00:21:58', '2022-06-19 00:21:58'),
+(1, 'ini akun Admin', 'admin', 'admin@example.com', NULL, NULL, '$2y$10$Bp5QjQcEt7PoSHPgNlUOleNmkUg5OzcwnCMcs7tlXwdOdgNd2zNsK', 'admin', 'RSpF6p9caJhkRYHrowYADgCIs4W9vVt3vTLHWbBv34C1b245BfMulab3ek9s', '2022-06-19 00:21:58', '2022-06-19 00:21:58'),
 (2, 'ini akun petugas (non admin)', 'user', 'user@example.com', NULL, NULL, '$2y$10$1eG1E9B/GavBvtjjkd8uXusYdR1uvx4CLWMdniBW41EmMWC5gWNMW', 'petugas', '3LLpZLMYvDtu7u4GyUEqsBxa2VCum8jQKsduj9NFmG7wztS2zm7SdC6FGmXv', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
 (3, 'ini akun petugas (non admin)', 'petugas1', 'petugas1@example.com', NULL, NULL, '$2y$10$aJBel4322kR1LUlp144GaeLM.PSwwF2ACoGj72Ydd4T7r5iqHHMha', 'petugas', '2KSQSh3Gnp6BoPiw99MdLk4eRK7GvrNgppp7DGkyfFXJbZZ509xIsz1o2Yb7', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
 (4, 'ini akun petugas (non admin)', 'petugas2', 'petugas2@example.com', NULL, NULL, '$2y$10$CWlocgObkay8496sME9cmu.OT5uaB9.5ej2Q3Y/4msM3H3f2XaM9q', 'petugas', 'N1GWdvRwUhnI0z5RoGVUnWzATi206wKaLoSWJ82jKzthiFLHHoYnmES4j5Ce', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
@@ -340,7 +420,7 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `google_id`, `email_veri
 (6, 'ini akun petugas (non admin)', 'petugas4', 'petugas4@example.com', NULL, NULL, '$2y$10$/SjWZTxmaxlowq/SwO3dA.cxzRNRSoT5SB0WdBcbqEV59gjcd2F1e', 'petugas', 'iQx6paPK5Nj1VevBvwEGBcgOd5eOesEWR4JcxYM8MPoCfIB5Bs1ZX5n4oyaY', '2022-06-19 00:21:59', '2022-06-25 17:19:59'),
 (7, 'ini akun Customer (non admin)', 'petugas5', 'petugas5@example.com', NULL, NULL, '$2y$10$n4vA2PSgQJxhxL8c2O5ZE.RHd5B9RDJ1MEyRydTu.XYo/OlO9T7Ra', 'petugas', '2pcn4qO0raBnUjkyYz9QYeapS4HuVDkXn43LGZsNJEu3CJLHoKPaBPbnXzyC', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
 (8, 'ini akun Customer (non admin)', 'otniel', 'otniel@example.com', NULL, NULL, '$2y$10$ib/Ckq4iFx1c8NcwiGmKxevYJfGwDmT5QkipBLZFJMHRxBpIiECjO', 'pelanggan', 'Eyq9UquhYOtwz4bNr69E4M9zZWf7Lzg9a9ltSaYxdfdLBUbWJ2QKGF16doaO', '2022-06-19 00:21:59', '2022-06-19 00:21:59'),
-(9, 'Galih Satrio Wibisono', 'galihsatrio', 'sgalih1234@gmail.com', NULL, NULL, '$2y$10$mk8WGZEfrBTqrEI8GpsuNu4GiCoXcPVRZ9SxbGC3qa4FBvISGjUB6', 'pelanggan', NULL, '2022-06-23 16:52:12', '2022-06-23 16:52:12');
+(9, 'Galih Satrio Wibisono', 'galihsatrio', 'sgalih1234@gmail.com', NULL, NULL, '$2y$10$Bp5QjQcEt7PoSHPgNlUOleNmkUg5OzcwnCMcs7tlXwdOdgNd2zNsK', 'pelanggan', NULL, '2022-06-23 16:52:12', '2022-06-23 16:52:12');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

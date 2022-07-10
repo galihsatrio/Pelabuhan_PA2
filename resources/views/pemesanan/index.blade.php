@@ -22,7 +22,7 @@
 @endsection
 @section('tabel')
  <thead>
-    <tr>
+    <tr class="text-center">
         <th>No</th>
         <th>Kode</th>
         <th>Tanggal</th>
@@ -38,16 +38,16 @@
             <td>{{ $value->kode }}</td>
             <td>{{ $value->tanggal }}</td>
             <td width="20%" class="text-center">
-                @if ($value->status_pembayaran == 0) 
+                @if ($value->status_pembayaran == 0)
                     <span class="badge badge-pill badge-danger">Belum Bayar</span>
-                @else 
+                @else
                     <span class="badge badge-pill badge-success">Sudah Bayar</span>
                 @endif
             </td>
             <td width="20%" class="text-center">
-                @if($value->status_pembayaran == 0) 
+                @if($value->status_pembayaran == 0)
                     <a href="{{$verifikasi.$value->id}}"><i class="bx bx-check bx-sm" data-toggle="tooltip" data-placement="top" title="Konfirm Pembayaran"></i></a>
-                @else 
+                @else
                     <i class="bx bx-minus" data-toggle="tooltip" data-placement="top" title="Sudah Bayar"></i>
                 @endif
             </td>

@@ -22,7 +22,7 @@
                     @foreach($model as $value)
                     <tr class="text-center">
                         <td height="50" style="vertical-align: middle">{{ $value->kode }}</td>
-                        <td height="50" style="vertical-align: middle">{{ $value->tanggal }}</td>
+                        <td height="50" style="vertical-align: middle">{{ Carbon\Carbon::parse($value->tanggal)->format('d-m-Y') }}</td>
                         <td height="50" style="vertical-align: middle">{{ Auth()->user()->name }}</td>
                         <td height="50" class="text-center" style="vertical-align: middle">
                             @if ($value->status_pembayaran == 1)
@@ -51,6 +51,11 @@
                         </td>
                     </tr>
                     @endforeach
+                    @if ($model->count() == 0)
+                    <tr>
+                        <td class="text-center pt-3" style="vertical-align: center; font-weight: bold" height="70" colspan="6"> - Tidak Ada Pesanan - </td>
+                    </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

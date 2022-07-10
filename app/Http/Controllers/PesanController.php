@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Dompdf\Dompdf;
+use Carbon\Carbon;
 
 class PesanController extends Controller
 {
@@ -18,6 +19,23 @@ class PesanController extends Controller
 
     public function store(Request $request){
         $data = $request->all();
+
+
+        $pesanan = DB::table('pesanans')->where('konfirmasi', 1)->where('tanggal', $data['tanggal'])->get();
+        $totalPenumpang = 0;
+        $totalKendaraan = 0;
+        foreach($pesanan as $value) {
+            $penumpang = DB::table('penumpangs')->where('pesanan_id', $value->id)->count();
+            $kendaraan = DB::table('kendaraans')->where('pesanan_id', $value->id)->count();
+            $totalPenumpang += $penumpang;
+            $totalKendaraan += $kendaraan;
+        }
+        $totalKendaraan = 100;
+        $batas = DB::table('batas')->first();
+        if ($batas->batas_penumpang < $totalPenumpang || $batas->batas_kendaraan < $totalKendaraan) {
+            return redirect()->back()->with('error', '');
+        }
+
 
         $this->validate($request,[
             'tanggal' => 'required',
@@ -36,14 +54,14 @@ class PesanController extends Controller
             'user_id' => Auth()->user()->id,
         ]);
 
-        $kendaraan = new Kendaraan;
-        $kendaraan->pesanan_id = $pesanan->id;
-        $kendaraan->tanggal = $data['tanggal'];
-        $kendaraan->waktu = $data['waktu'];
-        $kendaraan->nama = $data['nama'];
-        $kendaraan->jenis = $data['jenis'];
-        $kendaraan->no_polisi = $data['no_polisi'];
-        $kendaraan->save();
+        $kendaraan = Kendaraan::create([
+            'pesanan_id' => $pesanan->id,
+            'tanggal' => $request->tanggal,
+            'waktu' => $request->waktu,
+            'nama' => $request->nama,
+            'jenis' => $request->jenis,
+            'no_polisi' => $request->no_polisi,
+        ]);
 
         $request->validate([
             'addMoreInputFields.*.nama' => 'required',
@@ -62,9 +80,9 @@ class PesanController extends Controller
             ]);
         }
 
-        Alert::success('Pemesanan Tiket Berhasil', 'Konfirmasi pesanan untuk pengecekkan kembali');
+        Alert::warning('Pemesanan Tiket Berhasil', 'Konfirmasi pesanan untuk pengecekkan kembali');
+
         return redirect('/history-pemesanan/konfirmasi/'.Auth()->user()->id.'/'.$pesanan->id);
-        // return back()->with('success', 'Data anda telah masuk.');
     }
 
     public function historyPemesanan() {
@@ -86,10 +104,9 @@ class PesanController extends Controller
         $user = Auth()->user();
 
         $model = DB::table('pesanans')
-            ->select(
-                'pesanans.*'
-            )
+            ->select('pesanans.*')
             ->where('pesanans.user_id', $user->id)
+            ->where('pesanans.konfirmasi', 0)
             ->paginate(5);
 
         return view('konfirmasi.konfirmasi_pemesanan', ['model' => $model]);
@@ -112,6 +129,7 @@ class PesanController extends Controller
             ->where('pesanans.id', $id)
             ->where('pesanans.user_id', $auth)
             ->first();
+
         $pemesanan->kendaraan = DB::table('kendaraans')->where('pesanan_id', $pemesanan->id)->first();
         $pemesanan->penumpang = DB::table('penumpangs')->where('pesanan_id', $pemesanan->id)->get();
         $pemesanan->kembali = '/history-pemesanan';
@@ -134,7 +152,7 @@ class PesanController extends Controller
             ->first();
 
         $disabled = strtotime($pemesanan->tanggal) < time() ? 'disabled' : '';
-
+        // dd( strtotime($pemesanan->tanggal) < time());
         return view('konfirmasi.detail', ['model' => $pemesanan, 'data' => $data, 'disabled' => $disabled]);
     }
 
@@ -173,18 +191,31 @@ class PesanController extends Controller
         ]);
 
         foreach ($request->addMoreInputFields as $key => $value) {
-            DB::table('penumpangs')->where('id', $value['id'])->delete();
+            if (isset($value['id'])) {
+                DB::table('penumpangs')->where('id', $value['id'])->delete();
+            }
         }
 
+        $totalHarga = 0;
         foreach ($request->addMoreInputFields as $key => $value) {
             Penumpang::create([
                 "nama" => $value['nama'],
                 "jk" => $value['jk'],
                 "umur" => $value['umur'],
                 "alamat" => $value['alamat'],
-                "pesanan_id" => $id
+                "pesanan_id" => $id,
+                'harga' => $value['harga']
             ]);
+            $totalHarga += $value['harga'];
         }
+
+        $kodeInvoice = 'INVC00'.Pesanan::all()->count() + 1;
+        $invoice = DB::table('invoice')->insert([
+            'kode' => $kodeInvoice,
+            'pesanan_id' => $id,
+            'total' => $totalHarga,
+            'created_at' => Carbon::now()->toDateTimeString(),
+        ]);
 
         Alert::success('Konfirmasi Pemesanan Berhasil', 'Silahkan cetak faktur dan melanjutkan ke pembayaran');
         return redirect('/konfirmasi');

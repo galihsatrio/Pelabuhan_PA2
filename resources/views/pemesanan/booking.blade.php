@@ -11,6 +11,11 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger">
+                            <b>Mohon Maaf,</b> Kapal sudah penuh, silahkan pilih tanggal/waktu yang lain!
+                        </div>
+                    @endif
                     <form action="/booking" method="POST">
                       @csrf
                       <div class="">
@@ -71,6 +76,10 @@
                                               <option value="Gol VIII (Trailer)">Gol VIII (Trailer)</option>
                                           </select>
                                       </div>
+                                      <div class="col-lg-5">
+                                        <label for="">Harga</label>
+                                        <input type="text" class="form-control" value="54000" name="harga" disabled>
+                                      </div>
                                   </div>
 
                                   <div class="row mb-3">
@@ -90,24 +99,38 @@
                                       <td><label for="">Jenis Kelamin</label></td>
                                       <td><label for="">Umur</label></td>
                                       <td><label for="">Alamat</label></td>
+                                      <td><label for="">Harga</label></td>
                                       <td></td>
                                   </tr>
                                   <tr>
-                                      <td><input type="text" name="addMoreInputFields[0][nama]" placeholder="Enter " class="form-control" />
+                                      <td><input type="text" name="addMoreInputFields[0][nama]" placeholder="Enter" class="form-control" />
                                       </td>
 
-                                      <td><select name="addMoreInputFields[0][jk]" id="" class="center form-control">
-                                              <option value="">Pilih</option>
-                                              <option value="Laki-Laki">Laki-Laki</option>
-                                              <option value="Perempuan">Perempuan</option>
-                                          </select>
+                                      <td>
+                                        <select name="addMoreInputFields[0][jk]" id="" class="center form-control">
+                                            <option value="">Pilih</option>
+                                            <option value="Laki-Laki">Laki-Laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                        </select>
                                       </td>
                                       <td><input type="text" name="addMoreInputFields[0][umur]" placeholder="Enter " class="form-control" />
                                       </td>
                                       <td><input type="text" name="addMoreInputFields[0][alamat]" placeholder="Enter " class="form-control" />
                                       </td>
+                                      <td><input type="text" name="addMoreInputFields[0][harga]" placeholder="Enter " class="form-control" value="19000" disabled/>
+                                      </td>
                                       <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Tambah </button></td>
                                   </tr>
+
+                              </table>
+                              <table width="100%">
+                                <tr>
+                                    <td width="20%"></td>
+                                    <td width="20%"></td>
+                                    <td width="20%"></td>
+                                    <td width="20%" class="text-end pe-3"> <b>Total</b> </td>
+                                    <td width="20%"><input type="text" class="form-control" id="total" name="total" value="19000" disabled></td>
+                                </tr>
                               </table>
                                 @if (Route::has('login'))
                                     <div class="hidden fixed sm:block">
@@ -146,17 +169,23 @@
         </script>
         <script type="text/javascript">
             var i = 0;
+            var total = 19000;
             $("#dynamic-ar").click(function () {
                 ++i;
+                total += 19000;
+                $('#total').val(total);
                 $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
                     '][nama]" placeholder="Enter " class="form-control" /></td><td><select name="addMoreInputFields[' + i +
                     '][jk]" id="" class="center form-control"><option value="">Pilih</option><option value="Laki-Laki">Laki-Laki</option><option value="Perempuan">Perempuan</option></select></td></td><td><input type="text" name="addMoreInputFields[' + i +
                     '][umur]" placeholder="Enter " class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
-                    '][alamat]" placeholder="Enter " class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
-                    );
+                    '][alamat]" placeholder="Enter " class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
+                    '][harga]" placeholder="Enter " class="form-control" value="19000" disabled/></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+                );
             });
             $(document).on('click', '.remove-input-field', function () {
                 $(this).parents('tr').remove();
+                total -= 19000;
+                $('#total').val(total);
             });
         </script>
 @endsection
@@ -210,7 +239,7 @@
     <main>
 
 
-       
+
     </main>
 
     <!-- JavaScript Files -->
@@ -283,12 +312,12 @@
 
         popup.init();
 
-       
+
       </script>
       <script>
             $(function(){
                 var dtToday = new Date();
-                
+
                 var month = dtToday.getMonth() + 1;
                 var day = dtToday.getDate();
                 var year = dtToday.getFullYear();
@@ -296,7 +325,7 @@
                     month = '0' + month.toString();
                 if(day < 10)
                     day = '0' + day.toString();
-                
+
                 var maxDate = year + '-' + month + '-' + day;
                 $("#waktu").val("").change();
 
@@ -333,7 +362,7 @@
                             $("#waktu").append(o);
                         }
                     }
-                }); 
+                });
 
                 $("#waktu").change(function(){
                     var value = jQuery(this).find(":selected").val();
@@ -341,7 +370,7 @@
                         // get value
                         var split = value.split(':');
                         var realValue = parseInt(split[0]);
-                        
+
                         // get date
                         var d = new Date();
                         d.getHours();
@@ -352,7 +381,7 @@
                             month = '0' + month.toString();
                         if(day < 10)
                             day = '0' + day.toString();
-                        
+
                         var now = year + '-' + month + '-' + day;
                         var input = $("#tanggal").val();
 
@@ -377,13 +406,13 @@
                                 button: true
                             });
                         }
-                       
+
                     }
 
                 });
             });
 
       </script>
-     
+
   </body>
 </html>

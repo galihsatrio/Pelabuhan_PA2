@@ -14,7 +14,6 @@
                         <th height="50" style="vertical-align: middle">Tanggal</th>
                         <th height="50" style="vertical-align: middle">Pemesan</th>
                         <th height="50" style="vertical-align: middle">Status Pembayaran</th>
-                        {{-- <th height="50" style="vertical-align: middle">Konfirmasi Pesanan</th> --}}
                         <th height="50" style="vertical-align: middle">Detail</th>
                     </tr>
                 </thead>
@@ -31,15 +30,6 @@
                                 <span class="badge rounded-pill bg-warning text-light">Belum Terbayar</span>
                             @endif
                         </td>
-                        {{-- <td>
-                            @if ($value->konfirmasi == 0)
-                            <a href="/history-pemesanan/konfirmasi/{{Auth()->user()->id}}/{{$value->id}}">
-                                <i class="bx bx-check-shield bx-sm text-success" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Konfirmasi Pesanan"></i>
-                            </a>
-                            @else
-                            <i class="bx bxs-check-shield bx-sm text-success" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Konfirmasi Pesanan"></i>
-                            @endif
-                        </td> --}}
                         <td height="50" style="vertical-align: middle">
                             <a href="/history-pemesanan/detail/{{Auth()->user()->id}}/{{$value->id}}">
                                 <i class="bx bxs-info-circle bx-sm text-primary" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"></i>
