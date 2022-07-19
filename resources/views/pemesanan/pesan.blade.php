@@ -80,7 +80,7 @@
                                   </div>
 
                                   <div class="row mb-3">
-                                      <div class="col-lg-7">
+                                      <div class="col-lg-6">
                                           <label for="">Jenis Kendaraan</label>
                                           <select name="jenis" id="jenis" class="form-control">
                                               <option value="">-Pilih-</option>
@@ -96,8 +96,14 @@
                                               <option value="Gol VI B (Fuso 7 - 10 meter)">Gol VI B (Fuso 7 - 10 meter)</option>
                                               <option value="Gol VII (Tronton)">Gol VII (Tronton)</option>
                                               <option value="Gol VIII (Trailer)">Gol VIII (Trailer)</option>
+                                              <option value=""></option>
                                           </select>
                                       </div>
+                                      <div class="col-lg-1"></div>
+                                      <div class="col-lg-5" id="">
+                                          <label for="">No. Polisi</label>
+                                          <input type="text" class="form-control" name="nama"  placeholder="Nama">  
+                                    </div>
                                   </div>
 
                                   <div class="row mb-3">
@@ -157,6 +163,23 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type='text/javascript'>
+        $(window).load(function(){
+            $("#jenis").change(function() {
+                console.log($("#jenis option:selected").val());
+                if ($("#jenis option:selected").val() == 'Tidak Berkendara') {
+                    $('#no_polisi').prop('hidden', 'true');
+                } else if ($("#jenis option:selected").val() == 'Gol I (Sepeda Dayung)'){
+                    $('#no_polisi').prop('hidden', 'true');
+                }else if ($("#jenis option:selected").val() == ''){
+                    $('#no_polisi').prop('hidden', 'true');
+                }else {
+                    $('#no_polisi').prop('hidden', false);
+                }
+            });
+        });
+        </script>
+
         <script type='text/javascript'>
         $(window).load(function(){
             $("#jenis").change(function() {

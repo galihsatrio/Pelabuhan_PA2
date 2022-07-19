@@ -19,29 +19,31 @@
 @section('tabels')
 <thead>
     <tr>
-        <th>No</th>
-        <th>Image</th>
-        <th width="280px">Action</th>
+        <th class="text-center">No</th>
+        <th class="text-center">Image</th>
+        <th class="text-center" width="280px">Action</th>
     </tr>
 </thead>
 <tbody>
-    @foreach ($galeris as $galeri)
-    <tr>
-        <td>{{++$i}}</td>
-        <td><img src="/foto/product/{{$galeri->image}}" height="75" width="75" alt="" /></td>
-        <td>
-            <form action="{{ route('galeris.destroy',$galeri->id) }}" method="POST">
+    <div class="text-center">
+        @foreach ($galeris as $galeri)
+        <tr>
+            <td class="text-center">{{++$i}}</td>
+            <td class="text-center"><img src="/foto/product/{{$galeri->image}}" height="175" alt="" /></td>
+            <td class="text-center">
+                <form action="{{ route('galeris.destroy',$galeri->id) }}" method="POST">
 
-                <a class="btn btn-primary" href="{{ route('galeris.edit',$galeri->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('galeris.edit',$galeri->id) }}">Edit</a>
 
-                @csrf
-                @method('DELETE')
+                    @csrf
+                    @method('DELETE')
 
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </td>
-    </tr>
-    @endforeach
+                    {{-- <button type="submit" class="btn btn-danger">Delete</button> --}}
+                </form>
+            </td>
+        </tr>
+        @endforeach 
+        </div>
 </tbody>
 @endsection
 @section('links')

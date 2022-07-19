@@ -52,7 +52,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Isi Konten :</strong>
-                    <textarea class="form-control" style="height:150px" name="description" placeholder="Masukkan Isi Konten Berita" cols="60" rows="16"></textarea>
+                    <textarea class="form-control ckeditor" style="height:150px" name="description" placeholder="Masukkan Isi Konten Berita" cols="60" rows="16"></textarea>
                     @error('description')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror

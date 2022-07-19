@@ -13,7 +13,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="{{asset('https://fonts.googleapis.com')}}" />
     <link rel="preconnect" href="{{asset('https://fonts.gstatic.com')}}" crossorigin />
-<script src="{{asset('../assets/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+    <script src="{{asset('../assets/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
     <link
       href="{{asset('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap')}}"
@@ -33,7 +33,8 @@
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <!-- Variables CSS Files. Uncomment your preferred color scheme -->
     <link href="{{asset('assets/css/variables.css')}}" rel="stylesheet" />
-    <link rel="stylesheet" href="{{asset('css/ces.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/galery.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('css/ces.css')}}" /> --}}
     <!--Css style-->
     <link rel="stylesheet" href="{{asset('css/style.css')}}" />
     <style>
@@ -91,26 +92,24 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{asset('/galeri')}}">Galeri</a>
                 </li>
-                @auth
-                @if (Auth()->user()->level == 'pelanggan')
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Pemesanan </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="{{ asset('/history-pemesanan') }}">History Pemesanan</a></li>
-                      <li><a class="dropdown-item" href="{{ asset('/konfirmasi') }}">Konfirmasi Pemesanan</a></li>
-                    </ul>
-                </li>
-                @endif
-                @endauth
-                <li class="nav-item">
-                  @if (Route::has('login'))
-                  <div class="hidden fixed sm:block">
+                @if (Route::has('login'))
+                 <div class="hidden fixed sm:block">
                     @auth
-                        <a class="nav-item btn btn-danger tombol" href="{{route('logout')}}">Keluar</a>
+                    <div class="dropdown show">
+                      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ auth()->user()->name }}<i class="fa-solid fa-ellipsis-stroke-vertical"></i>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="{{ asset('/history-pemesanan') }}">History Pemesanan</a>
+                      <a class="dropdown-item" href="{{ asset('/konfirmasi') }}">Konfirmasi Pemesanan</a>
+                      <a class="dropdown-item" href="{{route('logout')}}">Keluar</a>
+
+                      </div>
+                    </div>
                     @else
                         <a class="nav-item btn btn-primary tombol" href="{{asset('login')}}">Masuk</a>
                     @endif
-                  </div>
+                    </div>
                   @endif
                 </li>
               </ul>
@@ -185,60 +184,6 @@
     <script src="{{asset('assets/vendor/php-email-form/validate.js')}}"></script>
     <script src="{{asset('assets/js/main.js')}}"></script>
     <script src="{{asset('https://kit.fontawesome.com/a81368914c.js')}}"></script>
-    <script src="{{asset('./app.js')}}"></script>
-
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: none">
-        <symbol id="close" viewBox="0 0 18 18">
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            fill="#FFFFFF"
-            d="M9,0.493C4.302,0.493,0.493,4.302,0.493,9S4.302,17.507,9,17.507
-    S17.507,13.698,17.507,9S13.698,0.493,9,0.493z M12.491,11.491c0.292,0.296,0.292,0.773,0,1.068c-0.293,0.295-0.767,0.295-1.059,0
-    l-2.435-2.457L6.564,12.56c-0.292,0.295-0.766,0.295-1.058,0c-0.292-0.295-0.292-0.772,0-1.068L7.94,9.035L5.435,6.507
-    c-0.292-0.295-0.292-0.773,0-1.068c0.293-0.295,0.766-0.295,1.059,0l2.504,2.528l2.505-2.528c0.292-0.295,0.767-0.295,1.059,0
-    s0.292,0.773,0,1.068l-2.505,2.528L12.491,11.491z"
-          />
-        </symbol>
-      </svg>
-      <script>
-        popup = {
-          init: function () {
-            $("figure").click(function () {
-              popup.open($(this));
-            });
-
-            $(document)
-              .on("click", ".popup img", function () {
-                return false;
-              })
-              .on("click", ".popup", function () {
-                popup.close();
-              });
-          },
-          open: function ($figure) {
-            $(".gallery").addClass("pop");
-            $popup = $('<div class="popup" />').appendTo($("body"));
-            $fig = $figure.clone().appendTo($(".popup"));
-            $bg = $('<div class="bg" />').appendTo($(".popup"));
-            $close = $('<div class="close"><svg><use xlink:href="#close"></use></svg></div>').appendTo($fig);
-            $shadow = $('<div class="shadow" />').appendTo($fig);
-            src = $("img", $fig).attr("src");
-            $shadow.css({ backgroundImage: "url(" + src + ")" });
-            $bg.css({ backgroundImage: "url(" + src + ")" });
-            setTimeout(function () {
-              $(".popup").addClass("pop");
-            }, 10);
-          },
-          close: function () {
-            $(".gallery, .popup").removeClass("pop");
-            setTimeout(function () {
-              $(".popup").remove();
-            }, 100);
-          },
-        };
-
-        popup.init();
-      </script>
+    
   </body>
 </html>

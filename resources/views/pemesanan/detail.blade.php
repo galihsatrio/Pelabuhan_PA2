@@ -6,7 +6,10 @@
         <div class="col-lg-12 margin-tb">
             <div class="d-flex justify-content-between align-items-center">
                 <h2>Detail Data Pemesanan</h2>
-                <a class="btn btn-primary btn-sm ml-auto" href="{{ $pemesanan->kembali }}" enctype="multipart/form-data"> <i class="bx bx-chevron-left my-auto"></i> Kembali</a>
+                @if ($pemesanan->status_pembayaran == 1 )
+                <a href="/bukti-pembayaran/{{ $pemesanan->id }}" class="btn btn-danger btn-sm ml-auto mr-3"> <i class="fas fa-file-pdf"></i> Cetak Bukti Pembayaran </a>
+                @endif
+                <a class="btn btn-primary btn-sm" href="{{ $pemesanan->kembali }}" enctype="multipart/form-data"> <i class="bx bx-chevron-left my-auto"></i> Kembali</a>
             </div>
         </div>
     </div>
@@ -42,7 +45,7 @@
                     <input type="text" name="waktu" class="form-control" value="{{ $pemesanan->waktu }}" disabled>
                 </div>
             </div>
-                
+
         </div>
         <div class="row mt-5">
             <div class="col-2">
@@ -69,6 +72,12 @@
                     <input type="text" name="no_polisi" class="form-control" value="{{ $pemesanan->kendaraan->no_polisi }}" disabled>
                 </div>
             </div>
+            <div class="col-6 pr-5">
+                <div class="form-group">
+                    <strong>Harga</strong>
+                    <input type="text" name="harga" class="form-control" value="{{ $pemesanan->kendaraan->harga }}" disabled>
+                </div>
+            </div>
         </div>
         <div class="row mt-5">
             <div class="col-2">
@@ -85,17 +94,25 @@
                             <th>Jenis Kelamin</th>
                             <th>Umur</th>
                             <th>Alamat</th>
+                            <th>Harga</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <div class="d-none">{{ $total = 0 }}</div>
                         @foreach($pemesanan->penumpang as $value)
                         <tr>
                             <td>{{ $value->nama }}</td>
                             <td>{{ $value->jk }}</td>
                             <td>{{ $value->umur }}</td>
                             <td>{{ $value->alamat }}</td>
+                            <td>{{ 'Rp. '.  number_format($value->harga,2,',','.') }}</td>
                         </tr>
+                        <div class="d-none">{{ $total += $value->harga }}</div>
                         @endforeach
+                        <tr>
+                            <td colspan="4" class="text-right pe-3"> <b>Total</b> </td>
+                            <td colspan="4" class="text-end pe-3"> <b> Rp. {{ number_format($total,2,',','.')  }} </b> </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

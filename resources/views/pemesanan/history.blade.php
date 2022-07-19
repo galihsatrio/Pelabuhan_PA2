@@ -14,7 +14,6 @@
                         <th height="50" style="vertical-align: middle">Tanggal</th>
                         <th height="50" style="vertical-align: middle">Pemesan</th>
                         <th height="50" style="vertical-align: middle">Status Pembayaran</th>
-                        {{-- <th height="50" style="vertical-align: middle">Konfirmasi Pesanan</th> --}}
                         <th height="50" style="vertical-align: middle">Detail</th>
                     </tr>
                 </thead>
@@ -31,15 +30,6 @@
                                 <span class="badge rounded-pill bg-warning text-light">Belum Terbayar</span>
                             @endif
                         </td>
-                        {{-- <td>
-                            @if ($value->konfirmasi == 0)
-                            <a href="/history-pemesanan/konfirmasi/{{Auth()->user()->id}}/{{$value->id}}">
-                                <i class="bx bx-check-shield bx-sm text-success" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Konfirmasi Pesanan"></i>
-                            </a>
-                            @else
-                            <i class="bx bxs-check-shield bx-sm text-success" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Konfirmasi Pesanan"></i>
-                            @endif
-                        </td> --}}
                         <td height="50" style="vertical-align: middle">
                             <a href="/history-pemesanan/detail/{{Auth()->user()->id}}/{{$value->id}}">
                                 <i class="bx bxs-info-circle bx-sm text-primary" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"></i>
@@ -55,6 +45,12 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <!-- JavaScript Files -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @endsection
 
 <!DOCTYPE html>
@@ -126,61 +122,14 @@
     <script src="{{asset('https://kit.fontawesome.com/a81368914c.js')}}"></script>
     <script src="{{asset('./app.js')}}"></script>
 
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: none">
-        <symbol id="close" viewBox="0 0 18 18">
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            fill="#FFFFFF"
-            d="M9,0.493C4.302,0.493,0.493,4.302,0.493,9S4.302,17.507,9,17.507
-    S17.507,13.698,17.507,9S13.698,0.493,9,0.493z M12.491,11.491c0.292,0.296,0.292,0.773,0,1.068c-0.293,0.295-0.767,0.295-1.059,0
-    l-2.435-2.457L6.564,12.56c-0.292,0.295-0.766,0.295-1.058,0c-0.292-0.295-0.292-0.772,0-1.068L7.94,9.035L5.435,6.507
-    c-0.292-0.295-0.292-0.773,0-1.068c0.293-0.295,0.766-0.295,1.059,0l2.504,2.528l2.505-2.528c0.292-0.295,0.767-0.295,1.059,0
-    s0.292,0.773,0,1.068l-2.505,2.528L12.491,11.491z"
-          />
-        </symbol>
-      </svg>
-      <script>
-        popup = {
-            init: function () {
-                $("figure").click(function () {
-                    popup.open($(this));
-                });
-
-                $(document)
-                .on("click", ".popup img", function () {
-                    return false;
-                })
-                .on("click", ".popup", function () {
-                    popup.close();
-                });
-            },
-            open: function ($figure) {
-                $(".gallery").addClass("pop");
-                $popup = $('<div class="popup" />').appendTo($("body"));
-                $fig = $figure.clone().appendTo($(".popup"));
-                $bg = $('<div class="bg" />').appendTo($(".popup"));
-                $close = $('<div class="close"><svg><use xlink:href="#close"></use></svg></div>').appendTo($fig);
-                $shadow = $('<div class="shadow" />').appendTo($fig);
-                src = $("img", $fig).attr("src");
-                $shadow.css({ backgroundImage: "url(" + src + ")" });
-                $bg.css({ backgroundImage: "url(" + src + ")" });
-                setTimeout(function () {
-                $(".popup").addClass("pop");
-                }, 10);
-            },
-            close: function () {
-                $(".gallery, .popup").removeClass("pop");
-                    setTimeout(function () {
-                    $(".popup").remove();
-                }, 100);
-            },
-        };
-
-        popup.init();
+  </head>
+  <body>
+    <main>
 
 
-      </script>
+
+    </main>
+
 
   </body>
 </html>

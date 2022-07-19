@@ -16,10 +16,10 @@ class PenumpangController extends Controller
     public function index()
     {
         // $data['penumpangs'] = Penumpang::orderBy('id','desc')->simplePaginate(5);
-        $data['penumpangs'] = DB::table('penumpangs')->join('pesanans', 'pesanans.id', '=', 'penumpangs.pesanan_id')->simplePaginate(5);
+        $data['penumpangs'] = DB::table('penumpangs')->join('pesanans', 'pesanans.id', '=', 'penumpangs.pesanan_id')->simplePaginate(10);
     
         return view('penumpangs.index', $data)
-            ->with('i',(request()->input('page',1) - 1) * 5);
+            ->with('i',(request()->input('page',1) - 1) * 10);
     }
 
     /**

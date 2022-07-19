@@ -4,9 +4,15 @@
 @section('content')
 <div class="container mb-5">
     <div class="row mt-5">
-        <div class="col-2">
+        <div class="col-3">
             <h5>Data Pemesan</h5>
             <hr>
+        </div>
+        <div class="col-9 text-end">
+            <a href="/faktur/{{ Auth()->user()->id }}/{{$pemesanan->id}}" class="btn btn-danger btn-sm ms-auto">
+                <i class="bx bxs-file-pdf"></i>
+                Cetak Faktur
+            </a>
         </div>
     </div>
     <div class="row mt-4">
@@ -55,6 +61,12 @@
                 <input type="text" name="no_polisi" class="form-control" value="{{ $pemesanan->kendaraan->no_polisi }}" disabled>
             </div>
         </div>
+        <div class="col-6 pe-5">
+            <div class="form-group mb-4">
+                <strong class="mb-4">Harga</strong>
+                <input type="text" name="harga" class="form-control" value="{{ $pemesanan->kendaraan->harga }}" disabled>
+            </div>
+        </div>
     </div>
     <div class="row mt-5">
         <div class="col-2">
@@ -71,6 +83,7 @@
                         <th>Jenis Kelamin</th>
                         <th>Umur</th>
                         <th>Alamat</th>
+                        <th>Harga</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,6 +93,7 @@
                         <td>{{ $value->jk }}</td>
                         <td>{{ $value->umur }}</td>
                         <td>{{ $value->alamat }}</td>
+                        <td>{{ 'Rp '.$value->harga }}</td>
                     </tr>
                     @endforeach
                 </tbody>

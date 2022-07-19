@@ -7,7 +7,7 @@
 img {
     display: block;
 }
-
+/* 
 .gallery {
     position: relative;
     z-index: 2;
@@ -588,7 +588,7 @@ img {
         -webkit-animation: poppy 100ms linear both;
         animation: poppy 100ms linear both;
     }
-}
+} */
 @-webkit-keyframes poppy {
     0% {
         -webkit-transform: matrix3d(

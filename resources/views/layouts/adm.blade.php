@@ -283,6 +283,18 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('../js/sb-admin-2.min.js')}}"></script>
+    <script src="{{asset('../ckeditor/ckeditor.js')}}"></script>
+    <link href="{{ asset('../ckeditor/plugins/codesnippet/lib/highlight/styles/default.css') }}" rel="stylesheet">
+    <script src="{{ asset('../ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js') }}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    {{-- <script src="//cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script> --}}
+    <script>
+      var konten = document.getElementById("konten");
+        CKEDITOR.replace(konten,{
+        language:'en-gb'
+      });
+      CKEDITOR.config.allowedContent = true;
+    </script> 
 
     <!-- Page level plugins -->
     <script src="{{asset('../vendor/datatables/jquery.dataTables.min.js')}}"></script>

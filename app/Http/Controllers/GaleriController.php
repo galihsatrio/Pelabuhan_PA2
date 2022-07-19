@@ -50,7 +50,8 @@ class GaleriController extends Controller
      
 
         $request->validate([
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:20048'
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:20048',
+            'description' => 'required',
         ]);
 
         $foto = $request->file('image');
@@ -59,11 +60,18 @@ class GaleriController extends Controller
         
         $foto->move(public_path('foto/product'), $path);
 
-        Galeri::create([
-            'title' => $request->title,
-            'image' => basename($path)
-        ]);
+        // Galeri::create([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        //     'image' => basename($path)
+        // ]);
 
+        $galeri = new Galeri();
+        $galeri->title = $request->title;
+        $galeri->description = $request->description;
+        $galeri->image = basename($path);
+        $galeri->save();
+        
         return redirect()->route('galeris.index')
                         ->with('success','Data galeri sudah berhasil dibuat.');
     }
@@ -114,14 +122,20 @@ class GaleriController extends Controller
         // $galeri->title = $request->title;
         // $galeri->save();
 
-        $foto = $request->file('image');
-        
-        $path = $foto->store('product', 'public');
-        
-        $foto->move(public_path('foto/product'), $path);
-
         $galeri = Galeri::find($id);
-        $galeri -> image = basename($path);
+         if($request->hasFile('image')){
+            $request->validate([
+              'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:20048',
+            ]);
+            $foto = $request->file('image');
+        
+            $path = $foto->store('product', 'public');
+
+            $foto->move(public_path('foto/product'), $path);
+
+            $galeri-> image = basename($path);
+        }
+        $galeri -> description = $request->description;
         $galeri->save();
 
         return redirect()->route('galeris.index')

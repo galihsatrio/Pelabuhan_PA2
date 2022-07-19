@@ -59,10 +59,9 @@ Route::get('logout', 'App\Http\Controllers\AuthController@logout')->name('logout
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['cek_login:admin']], function () {
-        // Route::get('/admin', function () {
-        //     return view('admin');
-        // });
         Route::get('/admin', [CountController::class,'index']);
+        Route::get('/batas-penumpang/{value}', [CountController::class,'batasPenumpang'])->name('batasPenumpang');
+        Route::get('/batas-kendaraan/{value}', [CountController::class,'batasKendaraan'])->name('batasKendaraan');
         Route::resource('penumpangs', PenumpangController::class);
         Route::resource('profiles', ProfileController::class);
         Route::resource('galeris', GaleriController::class);
@@ -73,7 +72,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pemesanan', [PemesananController::class,'index']);
         Route::get('/pemesanan/detail/{id}', [PemesananController::class,'detail']);
         Route::get('/pemesanan/verifikasi-pembayaran/{id}', [PemesananController::class,'lunas']);
+        Route::get('/bukti-pembayaran/{id}', [PemesananController::class,'cetakBuktiPembayaran'])->name('cetakBuktiPembayaran');
+        Route::get('/pemesanan/delete/{id}', [PemesananController::class,'destroy']);
+
+
     });
+
+    // Pelanggan
     Route::group(['middleware' => ['cek_login:pelanggan']], function () {
         Route::post('/booking', [PesanController::class,'store']);
         Route::get('/pesan', [PesanController::class,'index'])->name('pemesanan');
@@ -86,6 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/faktur/{auth}/{id}', [PesanController::class,'faktur'])->name('faktur');
         Route::post('/simpan-konfirm/{id}', [PesanController::class,'simpanKonfirm'])->name('simpanKonfirm');
     });
+
     Route::group(['middleware' => ['cek_login:petugas']], function () {
         Route::get('/petugass', [CountController::class,'petugas']);
         Route::get('/pemesanan-petugas', [PemesananController::class,'indexPetugas']);
@@ -93,6 +99,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pemesanan-petugas/verifikasi-pembayaran/{id}', [PemesananController::class,'lunasPetugas']);
         Route::resource('petugas', PetugasController::class);
         Route::resource('mobil', MobilController::class);
+        Route::get('/pemesanan/delete/{id}', [PemesananController::class,'destroyPetugas']);
+
     });
 });
 

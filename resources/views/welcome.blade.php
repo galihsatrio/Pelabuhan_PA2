@@ -77,18 +77,13 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{asset('/galeri')}}">Galeri</a>
                 </li>
-                @auth
-                @if (Auth()->user()->level == 'pelanggan')
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Pemesanan </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="{{ asset('/history-pemesanan') }}">History Pemesanan</a></li>
                     </ul>
-                </li>
-                @endif
-                @endauth
-                <li class="nav-item">
-                  @if (Route::has('login'))
+                </li> --}}
+                {{-- @if (Route::has('login'))
                   <div class="hidden fixed sm:block">
                     @auth
                         <a class="nav-item btn btn-danger tombol" href="{{route('logout')}}">Keluar</a>
@@ -96,7 +91,50 @@
                         <a class="nav-item btn btn-primary tombol" href="{{asset('login')}}">Masuk</a>
                     @endif
                   </div>
+                  @endif --}}
+                {{-- @auth --}}
+                @if (Route::has('login'))
+                 <div class="hidden fixed sm:block">
+                    @auth
+                    <div class="dropdown show">
+                      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ auth()->user()->name }}<i class="fa-solid fa-ellipsis-stroke-vertical"></i>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="{{ asset('/history-pemesanan') }}">History Pemesanan</a>
+                      <a class="dropdown-item" href="{{ asset('/konfirmasi') }}">Konfirmasi Pemesanan</a>
+                      <a class="dropdown-item" href="{{route('logout')}}">Keluar</a>
+
+                      </div>
+                    </div>
+                    @else
+                        <a class="nav-item btn btn-primary tombol" href="{{asset('login')}}">Masuk</a>
+                    @endif
+                    </div>
                   @endif
+                
+                {{-- <li class="nav-item">
+                  @if (Route::has('login'))
+                  <div class="hidden fixed sm:block">
+                    @auth
+                    <div class="dropdown show">
+                      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ auth()->user()->name }}<i class="fa-solid fa-ellipsis-stroke-vertical"></i>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="{{ asset('/history-pemesanan') }}">History Pemesanan</a>
+                      <a class="dropdown-item" href="{{ asset('/konfirmasi') }}">Konfirmasi Pemesanan</a>
+                      <a class="dropdown-item" href="{{route('logout')}}">Keluar</a>
+
+                      </div>
+                    </div>
+                    @else
+                        <a class="nav-item btn btn-primary tombol" href="{{asset('login')}}">Masuk</a>
+                    @endif
+                  </div>
+                  @endif
+                  @endif
+                @endauth --}}
                 </li>
 
               </ul>
@@ -116,6 +154,10 @@
                   {{ $home2->content}}
                 </p>
               </div>
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3">
+              <div id="ml_4f0ebae5"><div style="padding:0;margin:0;" id="ml_4f0ebae5_i" v='1.1' a='{"t":"a","lang":"id","ids":["2375"],"a_bg":"#FFFFFF","a_br_c":"#FFB300","a_n_b":"#FFB300","a_icon":"#FFFFFF00","a_con":"#FFB300","a_inter":"#FFFFFF00","a_n_c":"#000000","a_icon_color":"#000000","a_con_c":"#000000","a_int_h_color":"#000000","a_int_temp_color":"#000000","p_w":236,"a_fn":"Arial"}'></div><div id="ml_4f0ebae5_c" style="padding:0;margin:0;padding:7px 5px;"><img src="https://cuacalab.id/assets/img/logo_z_b.svg" style=";vertical-align:baseline;padding:0;margin:0;width:15px;opacity:0.7;margin-right:5px;position:relative;top:1px;display:inline-block;"><a href="https://cuacalab.id/cuaca_medan/hari_ini/" style="color:grey;font-size:12px;text-decoration:none;" target="_blank" id="ml_4f0ebae5_u">Cuaca Hari ini</a></div></div><script async src="https://app.cuacalab.id/js/?id=ml_4f0ebae5"></script>
             </div>
           </div>
         </div>
@@ -180,7 +222,8 @@
                     <div class="col-md-8">
                       <div class="card-body">
                         <h5 class="card-title">{{$tentang->title}}</h5>
-                        <p class="card-text">{{ substr($tentang->description, 0, 90) }}...</p>
+                        <p class="card-text">{!! html_entity_decode(substr($tentang->description, 0, 90)) !!}...</p>
+                        
                         <hr />
                         <div class="row">
                           <div class="col">

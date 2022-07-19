@@ -81,8 +81,6 @@ class BeritaController extends Controller
         $berita->image = basename($path);
         $berita->save();
         
-        
-     
         return redirect()->route('beritas.index')
                         ->with('success','Data berita sudah berhasil dibuat.');
     }

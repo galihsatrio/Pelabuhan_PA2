@@ -35,7 +35,7 @@
             </div> --}}
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Post Image:</strong>
+                <strong>Gambar:</strong>
                  <input type="file" name="image" class="form-control" placeholder="Post Title">
                 @error('image')
                   <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
@@ -45,6 +45,15 @@
 
               <img src="/foto/product/{{$galeri->image}}" height="300"  alt="" />
 
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Isi Konten :</strong>
+                <textarea class="form-control" style="height:150px" name="description" placeholder="Masukkan Isi Konten Berita" cols="60" rows="16">{{$galeri->description}}</textarea>
+                @error('description')
+                <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                @enderror
             </div>
         </div>
 

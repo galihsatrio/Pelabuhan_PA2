@@ -20,7 +20,7 @@
  <thead>
     <tr>
         <th>No</th>
-        <th>Title</th>
+        <th>Judul</th>
         <th width="280px">Action</th>
     </tr>
 </thead>
@@ -32,7 +32,7 @@
             <td>
                 <form action="{{ route('profiles.show',$profile->id) }}" method="POST">
 
-                    <a class="btn btn-warning" href="{{ route('profiles.show',$profile->id) }}">View</a>
+                    <a class="btn btn-warning" href="{{ route('profiles.show',$profile->id) }}">Lihat</a>
                     <a class="btn btn-primary" href="{{ route('profiles.edit',$profile->id) }}">Edit</a>
                     @csrf
                     @method('DELETE')

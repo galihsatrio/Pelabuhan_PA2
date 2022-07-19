@@ -25,23 +25,22 @@
          <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Post Title:</strong>
+                    <strong>Judul:</strong>
                     <input type="text" name="title" value="{{ $profile->title }}" class="form-control" placeholder="Post Title" disabled>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Konten Website:</strong>
+                            <textarea class="form-control" style="height:150px" name="content" placeholder="Post content" disabled>{{ $profile->content }}</textarea>
+                        </div>
+                    </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Post content:</strong>
-                        <textarea class="form-control" style="height:150px" name="content" placeholder="Post content" disabled>{{ $profile->content }}</textarea>
+                        <img src="/foto/product/{{$profile->image}}" height="200" alt="" />
                     </div>
                 </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <img src="/foto/product/{{$profile->image}}" height="200" alt="" />
-                </div>
-            </div>
-              <button type="submit" class="btn btn-primary ml-3">Submit</button>
 
-        </div>
+            </div>
          </div>
 
     </form>

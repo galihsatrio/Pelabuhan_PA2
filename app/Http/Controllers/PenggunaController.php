@@ -91,6 +91,14 @@ class PenggunaController extends Controller
     
         return view('content.galeri', $data);
     }
+
+    public function show_galeri(Galeri $galeri,$id)
+    {
+        $galeri = Berita::find($id);
+
+        return view('content.galeri',compact('galeri'));
+    }
+
     public function tabel()
     {
         return view('content.tabel');

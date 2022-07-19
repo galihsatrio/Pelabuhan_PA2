@@ -18,7 +18,7 @@
                     <figure class="mb-4"><img class="img-fluid rounded" src="/foto/product/{{$tampil->image}}" alt="..." data-aos="fade-up"/></figure>
                     <!-- Post content-->
                     <section class="mb-5" data-aos="fade-up">
-                        <p class="fs-5 mb-4">{{ $tampil->description }}</p>
+                        <p class="fs-5 mb-4">{!! html_entity_decode($tampil->description) !!}</p>
                     </section>
                     <h5 data-aos="fade-up">Sumber dari : {{ $tampil->sumber }}</h5>
                 </article>

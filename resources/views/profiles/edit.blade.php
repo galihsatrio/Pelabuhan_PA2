@@ -25,8 +25,8 @@
          <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>No:</strong>
-                    <input type="text" name="title" value="{{ $profile->title }}" class="form-control" placeholder="Post Title" disabled>
+                    <strong>Judul:</strong>
+                    <input type="text" name="title" value="{{ $profile->title }}" class="form-control" placeholder="Post Title" >
                     @error('title')
                      <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
